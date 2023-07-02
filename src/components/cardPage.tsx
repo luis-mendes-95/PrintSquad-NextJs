@@ -1,7 +1,7 @@
 import { serviceOrderData } from "@/schemas/serviceOrder.schema";
 import Image from "next/image";
 import Link from "next/link";
-import { CardBase } from "../styles/card";
+import { CardBase, CardBasePage } from "../styles/card";
 import { GoogleFonts } from "next-google-fonts";
 import { useRouter } from "next/router";
 
@@ -9,16 +9,17 @@ interface iCardServiceOrderProps {
   serviceOrder: serviceOrderData;
 }
 
-const CardServiceOrder = ({ serviceOrder }: iCardServiceOrderProps) => {
+const CardPage = ({ serviceOrder }: iCardServiceOrderProps) => {
 
   const router = useRouter()
 
   return (
-    <CardBase onClick={()=>{router.push(`${serviceOrder.id}`)}}>
+    <CardBasePage>
       <GoogleFonts href="https://fonts.googleapis.com/css2?family=Anton&family=Fjalla+One&family=Righteous&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Vina+Sans&display=swap" />
 
       <div className="divServiceOrderMockup">
-        <h2 className="h2ServiceOrderTitle">{serviceOrder.client}</h2>
+        <p>{serviceOrder.date}</p>
+        <h2>{serviceOrder.client}</h2>
         {serviceOrder.mockupImg !== null ? (
           <Image
             width={100}
@@ -40,12 +41,24 @@ const CardServiceOrder = ({ serviceOrder }: iCardServiceOrderProps) => {
         
       </div>
 
+      <div className="divMockup">
+        <h3>VER MOCKUP:</h3>
+          <button className="ButtonSeeMockup">ABRIR</button>
+          
+      </div>
+
       <div className="divProductTitle">
-        <h3>PRODUCT:</h3>
+        <h3>PRODUTO:</h3>
         <p>{serviceOrder.product}</p>
       </div>
-    </CardBase>
+
+      <div className="divPrintType">
+        <h3>TIPO:</h3>
+        <p>{serviceOrder.printType}</p>
+      </div>
+      
+    </CardBasePage>
   );
 };
 
-export default CardServiceOrder;
+export default CardPage;

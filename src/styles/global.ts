@@ -6,4 +6,14 @@ export const GlobalStyles = createGlobalStyle`
         padding: 0;
         box-sizing: border-box;
     }
+
+    button{
+        cursor: pointer;
+        transition: 0.3s;
+
+        &:hover{
+            transition: 0.3s;
+            transform: scale(1.05);
+        }
+    }
 `;
