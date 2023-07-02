@@ -11,8 +11,8 @@ const Header = () => {
       <h1 onClick={() => {router.push("/");}} className="h1TitleHeader">PrintSquad</h1>
       <nav className="navHeaderButtons">
         <ul className="ulHeaderButtons">
-          <li className="liHeaderButtons">About</li>
-          <li className="liHeaderButtons">Login</li>
+          <li className="liHeaderButtons"onClick={() => {router.push("/about");}}>About</li>
+          <li className="liHeaderButtons"onClick={() => {router.push("/loginPage");}}>Login</li>
         </ul>
       </nav>
     </HeaderBase>

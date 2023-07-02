@@ -44,7 +44,7 @@ const LoginForm = () => {
           <button type="submit">Entrar</button>
         </div>
 
-        <Link href="/register">Não é cadastrado ainda? Clique aqui</Link>
+        {/* <Link href="/register">Não é cadastrado ainda? Clique aqui</Link> */}
       </form>
     </div>
   );

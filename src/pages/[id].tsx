@@ -49,7 +49,7 @@ const ServiceOrder: NextPage<ServiceOrderProps> = ({
           <button className="ButtonSendUpdateMockup">
             ENVIAR / SUBSTITUIR MOCKUP
           </button>
-          <button className="ButtonAuthorize">AUTORIZAR PRODUÇÃO</button>
+          <button className="ButtonAuthorize">AUTORIZAR IMPRESSÃO</button>
         </ul>
       </main>
       <Footer />
