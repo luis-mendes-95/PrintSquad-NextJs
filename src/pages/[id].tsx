@@ -6,6 +6,11 @@ import { GetServerSideProps, GetStaticProps, NextPage } from "next";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import nookies from "nookies";
+import { ServiceOrderPageBase } from "../styles/serviceOrderPage";
+import CardServiceOrder from "@/components/card";
+import CardPage from "@/components/cardPage";
+import ServiceOrderDashboard from "@/components/ServiceOrderDashboard";
+import ServiceOrderDashFiles from "@/components/ServiceOrderDashFiles";
 
 interface ServiceOrderProps {
   serviceOrder: serviceOrderData;
@@ -17,56 +22,38 @@ const ServiceOrder: NextPage<ServiceOrderProps> = ({
   const router = useRouter();
 
   return (
-    <>
+    <ServiceOrderPageBase>
       <Header />
       <main>
-        <p>{serviceOrder.client}</p>
-        <div>
-          <div>
-            <p>Product:</p>
-            <p>{serviceOrder.product}</p>
-          </div>
-          <div>
-            <p>Print Type:</p>
-            <p>{serviceOrder.printType}</p>
-          </div>
-          <div>
-            <p>Description:</p>
-            <p>{serviceOrder.description}</p>
-          </div>
-          <div>
-            <p>Status:</p>
-            <p>{serviceOrder.status}</p>
-          </div>
-          <div>
-            <p>Cost:</p>
-            <p>{serviceOrder.cost}</p>
-          </div>
-          <div>
-            <p>Price:</p>
-            <p>{serviceOrder.price}</p>
-          </div>
-          <div>
-            <p>Margin:</p>
-            <p>{serviceOrder.margin}</p>
-          </div>
-        </div>
-        {serviceOrder.mockupImg && (
-          <div>
-            <Image
-              width={209}
-              height={186}
-              src={serviceOrder.mockupImg}
-              alt="Mockup da ordem de serviço"
-            />
-          </div>
-        )}
-        <div>
-          <button>Então, djow...</button>
-        </div>
+        <ul className="serviceOrderCards">
+          <li key={serviceOrder.id} className="liCardServiceOrder">
+            <CardPage serviceOrder={serviceOrder} />
+          </li>
+
+          <li
+            key={serviceOrder.id}
+            className="liDashServiceOrder"
+            style={{ maxWidth: "93%", minWidth: "42%" }}
+          >
+            <ServiceOrderDashboard serviceOrder={serviceOrder} />
+          </li>
+
+          <li
+            key={serviceOrder.id}
+            className="liDashServiceOrderFiles"
+            style={{ maxWidth: "100%", minWidth: "30%" }}
+          >
+            <ServiceOrderDashFiles serviceOrder={serviceOrder} />
+          </li>
+
+          <button className="ButtonSendUpdateMockup">
+            ENVIAR / SUBSTITUIR MOCKUP
+          </button>
+          <button className="ButtonAuthorize">AUTORIZAR PRODUÇÃO</button>
+        </ul>
       </main>
       <Footer />
-    </>
+    </ServiceOrderPageBase>
   );
 };
 
