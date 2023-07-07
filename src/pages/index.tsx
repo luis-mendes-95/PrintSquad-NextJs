@@ -5,26 +5,41 @@ import CardServiceOrder from "../components/card";
 import Header from "@/components/header";
 import Footer from "@/components/footer";
 import {DivHomeBase} from "../styles/home"
+import { useAuth } from "@/contexts/authContext";
 
 interface HomeProps {
   serviceOrders: serviceOrderData[];
 }
 
 const Home: NextPage<HomeProps> = ({ serviceOrders }) => {
+
+  const { user } = useAuth()
+
   return (
     <DivHomeBase>
       <Header />
       <main>
-        <ul className="serviceOrderCards">
-          {serviceOrders.length === 0 && <div className="divNoOrders">Você não possui nenhuma ordem de serviço</div>}
-          {serviceOrders.map((individualServiceOrder) => {
-            return (
-              <li key={individualServiceOrder.id}>
-                <CardServiceOrder serviceOrder={individualServiceOrder} />
-              </li>
-            );
-          })}
-        </ul>
+        {
+          user &&
+            <ul className="serviceOrderCards">
+            {serviceOrders.length === 0 && <div className="divNoOrders">Você não possui nenhuma ordem de serviço</div>}
+            {serviceOrders.map((individualServiceOrder) => {
+              return (
+                <li key={individualServiceOrder.id}>
+                  <CardServiceOrder serviceOrder={individualServiceOrder} />
+                </li>
+              );
+            })}
+          </ul>
+        }
+
+        {
+          !user &&
+        <section className="sectionHomePageVisitor">
+          sectionHomePageVisitor
+        </section>
+        }
+
       </main>
       <Footer />
 

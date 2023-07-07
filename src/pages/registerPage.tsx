@@ -1,6 +1,6 @@
 import Footer from "@/components/footer";
 import Header from "@/components/header";
-import RegisterForm from "@/components/registerForm";
+import RegisterForm from "@/components/_registerForm";
 import { NextPage } from "next";
 
 const Register: NextPage = () => {
