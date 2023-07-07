@@ -7,7 +7,7 @@ export const serviceOrderSchema = z.object({
   product: z.string(),
   printType: z.string(),
   description: z.string(),
-  files: z.string(),
+  files: z.array(z.string()),
   mockupImg: z.string(),
   status: z.string(),
   cost: z.string(),
@@ -15,19 +15,11 @@ export const serviceOrderSchema = z.object({
   margin: z.string(),
 });
 
+
 export const serviceOrderSchemaRequest = serviceOrderSchema.omit({
-  id: true,
-  date: true,
-  client: true,
-  product: true,
-  printType: true,
-  description: true,
-  status: true,
-  cost: true,
-  price: true,
-  margin: true,
-});
+  id: true
+})
+
 
 export type serviceOrderRequest = z.infer<typeof serviceOrderSchemaRequest>;
-
 export type serviceOrderData = z.infer<typeof serviceOrderSchema>;
