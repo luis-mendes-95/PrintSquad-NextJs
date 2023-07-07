@@ -1,4 +1,16 @@
 import styled from "styled-components";
+import Image from 'next/image';
+
+export const StyledImage = styled(Image)`
+  width: 35%;
+  height: 35%;
+
+  @media(min-width: 768px){
+    width: 5%;
+    height: 5%;
+  }
+
+`;
 
 export const HeaderBase = styled.header`
   background-color: black;

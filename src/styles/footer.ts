@@ -31,7 +31,8 @@ export const FooterBase = styled.footer`
   }
 
   .ButtonAddOrder,
-  .ButtonFilter {
+  .ButtonFilter,
+  .ButtonLogout {
     border: none;
     width: 30px;
     height: 30px;
@@ -54,5 +55,16 @@ export const FooterBase = styled.footer`
   .ButtonFilter {
     font-size: 12pt;
     background-color: orange;
+  }
+
+  .ButtonLogout{
+    background-color: red;
+    color: white;
+    text-shadow: 1pt 1pt 1pt black;
+    font-size: 10pt;
+    width: 55px;
+    height: 25px;
+    border-radius: 15%;
+    box-shadow: 1pt 1pt 2pt black;
   }
 `;
