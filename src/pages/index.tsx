@@ -6,6 +6,8 @@ import Header from "@/components/header";
 import Footer from "@/components/footer";
 import {DivHomeBase} from "../styles/home"
 import { useAuth } from "@/contexts/authContext";
+import { useRouter } from "next/router";
+import { useEffect } from "react";
 
 interface HomeProps {
   serviceOrders: serviceOrderData[];
@@ -13,7 +15,16 @@ interface HomeProps {
 
 const Home: NextPage<HomeProps> = ({ serviceOrders }) => {
 
+  const router = useRouter();
+
   const { user } = useAuth()
+
+  useEffect(() => {
+    if (!user) {
+      router.push("/about");
+    }
+  }, [user, router]);
+
 
   return (
     <DivHomeBase>
