@@ -60,7 +60,7 @@ const Home: NextPage<HomeProps> = ({ serviceOrders }) => {
 
 export const getServerSideProps: GetServerSideProps = async (cxt) => {
   const token =
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImF2YWlsdG9uamVzdXM1QGhvdG1haWwuY29tIiwiaWF0IjoxNjg4MTAwMzA0LCJleHAiOjE2ODgxMDM5MDQsInN1YiI6IjExZDYxZWMwLWI0MWYtNGY5Yy04YWMzLTVkNTlhZjUyMGY2OCJ9.HUSzcGNFnP2Yx-dOoTKsN0hwobIDY-aOAo5zKucDrUc";
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Imx1aXMubWVuZGVzLjk1QGhvdG1haWwuY29tIiwiaWF0IjoxNjg5Mjc3MDY1LCJleHAiOjE2ODkyODA2NjUsInN1YiI6ImFhYWU1MjE1LTA1ZTEtNGE0My04MWQyLTZkOTYzNGY5ODhmNCJ9.ctJclltgP5i6HgX1erhts-cjBT3L36e2vrmw0zwgVRA";
 
   const response = await api.get<serviceOrderData[]>("/serviceOrders", {
     headers: {

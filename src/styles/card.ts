@@ -380,6 +380,9 @@ export const DashServiceOrder = styled.div`
     }
 
     .pDescription {
+      height: 100%;
+      overflow-y: scroll;
+      overflow-x: hidden;
       color: black;
       text-shadow: none;
       background-color: lightblue;

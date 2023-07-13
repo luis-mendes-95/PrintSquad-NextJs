@@ -19,13 +19,7 @@ const ServiceOrderDashboard = ({ serviceOrder }: iCardServiceOrderProps) => {
         <h2>INSTRUÇÕES:</h2>
         <button className="buttonAddInstruction">ADICIONAR + </button>
         <div className="divServiceOrderInstructions">
-          <p className="pDescription">#7 - {serviceOrder.description}</p>
-          <p className="pDescription">#6 - {serviceOrder.description}</p>
-          <p className="pDescription">#5 - {serviceOrder.description}</p>
-          <p className="pDescription">#4 - {serviceOrder.description}</p>
-          <p className="pDescription">#3 - {serviceOrder.description}</p>
-          <p className="pDescription">#2 - {serviceOrder.description}</p>
-          <p className="pDescription">#1 - {serviceOrder.description}</p>
+          <p className="pDescription">{serviceOrder.description}</p>
         </div>
       </DashServiceOrder>
     </>
