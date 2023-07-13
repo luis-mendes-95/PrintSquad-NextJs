@@ -1,18 +1,19 @@
-import Link from "next/link";
-import { GoogleFonts } from "next-google-fonts";
+import React from "react";
 
 interface InputProps {
   label: string;
+  value?: string;
+  onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
   [key: string]: any;
 }
 
-function Input({ label, ...props }: InputProps) {
+const Input: React.FC<InputProps> = ({ label, value, onChange, ...props }) => {
   return (
     <>
       <label>{label}</label>
-      <input {...props} />
+      <input value={value} onChange={onChange} {...props} />
     </>
   );
-}
+};
 
 export default Input;

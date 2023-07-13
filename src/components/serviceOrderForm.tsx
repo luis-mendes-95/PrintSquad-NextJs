@@ -1,24 +1,12 @@
-import {  serviceOrderData,  serviceOrderSchema,} from "@/schemas/serviceOrder.schema";
-import Link from "next/link";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useAuth } from "@/contexts/authContext";
-import { useServiceOrder } from "@/contexts/serviceOrderContext";
 import Input from "./input";
 import { CreateServiceOrderFormBase } from "../styles/addServiceOrderForm";
-import { useState } from "react";
+import { serviceOrderData } from "@/schemas/serviceOrder.schema";
 
 const ServiceOrderForm = () => {
-
   const [files, setFiles] = useState<File[]>([]);
-
-  const { register, handleSubmit, formState  } = useForm<serviceOrderData>({    resolver: zodResolver(serviceOrderSchema) });
-
-  const {errors} = formState 
-
-  console.log(errors)
-
-  const { createServiceOrder } = useServiceOrder();
+  const { register, handleSubmit } = useForm<serviceOrderData>();
 
   const getDate = () => {
     const date = new Date();
@@ -31,27 +19,15 @@ const ServiceOrderForm = () => {
   const date = getDate();
 
   const onFormSubmit = async (formData: serviceOrderData) => {
-    createServiceOrder(formData);
+    console.log(formData);
   };
 
   return (
     <CreateServiceOrderFormBase>
       <h2>Criar Ordem de Serviço</h2>
       <form onSubmit={handleSubmit(onFormSubmit)}>
-
-        <Input
-          label="Data"
-          type="text"
-          {...register("date")}
-          value={date}
-          disabled
-        />
-        <Input
-          label="Cliente"
-          type="text"
-          {...register("client")}
-          placeholder="Digite o nome do cliente"
-        />
+        <Input label="Data" type="text" {...register("date")} value={date} disabled />
+        <Input label="Cliente" type="text" {...register("client")} placeholder="Digite o nome do cliente" />
 
         <label>Produto:</label>
         <select {...register("product")}>
@@ -75,7 +51,7 @@ const ServiceOrderForm = () => {
         </select>
 
         <label>Instrução para arte:</label>
-        <textarea placeholder="Digite aqui informações para que a arte seja feita"></textarea>
+        <textarea placeholder="Digite aqui informações para que a arte seja feita" {...register("description")} />
 
         <label>Arquivos para arte:</label>
         <Input

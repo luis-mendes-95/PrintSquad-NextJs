@@ -7,7 +7,7 @@ export const serviceOrderSchema = z.object({
   product: z.string(),
   printType: z.string(),
   description: z.string(),
-  files: z.array(z.string()),
+  files: z.string(),
   mockupImg: z.string(),
   status: z.string(),
   cost: z.string(),
