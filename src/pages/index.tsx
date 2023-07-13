@@ -17,7 +17,7 @@ const Home: NextPage<HomeProps> = ({ serviceOrders }) => {
 
   const router = useRouter();
 
-  const { user } = useAuth()
+  const { user, checkLoggedIn } = useAuth()
 
   useEffect(() => {
     if (!user) {
@@ -25,6 +25,7 @@ const Home: NextPage<HomeProps> = ({ serviceOrders }) => {
     }
   }, [user, router]);
 
+  checkLoggedIn()
 
   return (
     <DivHomeBase>
@@ -60,7 +61,7 @@ const Home: NextPage<HomeProps> = ({ serviceOrders }) => {
 
 export const getServerSideProps: GetServerSideProps = async (cxt) => {
   const token =
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Imx1aXMubWVuZGVzLjk1QGhvdG1haWwuY29tIiwiaWF0IjoxNjg5Mjc3MDY1LCJleHAiOjE2ODkyODA2NjUsInN1YiI6ImFhYWU1MjE1LTA1ZTEtNGE0My04MWQyLTZkOTYzNGY5ODhmNCJ9.ctJclltgP5i6HgX1erhts-cjBT3L36e2vrmw0zwgVRA";
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Imx1aXMubWVuZGVzLjk1QGhvdG1haWwuY29tIiwiaWF0IjoxNjg5MjgwOTQ3LCJleHAiOjE2ODkyODQ1NDcsInN1YiI6ImFhYWU1MjE1LTA1ZTEtNGE0My04MWQyLTZkOTYzNGY5ODhmNCJ9.81R4fq-LszTOj-3rTgE9Ih7HirskK11B5QohAAI4AeM";
 
   const response = await api.get<serviceOrderData[]>("/serviceOrders", {
     headers: {

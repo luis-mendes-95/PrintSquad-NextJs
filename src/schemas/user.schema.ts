@@ -1,6 +1,7 @@
 import {z} from "zod"
 
 export const userSchema = z.object({
+    id: z.string(),
     name:z.string(),
     email: z.string(),
     phone: z.string(),
@@ -8,6 +9,7 @@ export const userSchema = z.object({
 })
 
 export const loginSchema = userSchema.omit({
+  id: true,
   name: true,
   phone: true
 });
