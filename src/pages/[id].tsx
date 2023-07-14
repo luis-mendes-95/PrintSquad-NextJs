@@ -2,7 +2,7 @@ import Footer from "@/components/footer";
 import Header from "@/components/header";
 import { serviceOrderData } from "@/schemas/serviceOrder.schema";
 import api from "@/services/api";
-import { GetServerSideProps, GetStaticProps, NextPage } from "next";
+import { GetServerSideProps, GetStaticPaths, GetStaticProps, NextPage } from "next";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import nookies from "nookies";
@@ -55,26 +55,37 @@ const ServiceOrder: NextPage<ServiceOrderProps> = ({  serviceOrder,}: ServiceOrd
         </ul>
       </main>
       <Footer />
-      {showAddInstrunctionModal&& <AddInstructionFormModal/>}
+      {showAddInstrunctionModal&& <AddInstructionFormModal serviceOrder={serviceOrder}/>}
       
     </ServiceOrderPageBase>
   );
 };
 
-export const getStaticPaths = async () => {
-  return {
-    paths: [
-      {
-        params: { id: "847b5e73-1215-4287-8246-8cd6415f952e" },
-      },
-    ],
-    fallback: "blocking",
-  };
+export const getStaticPaths: GetStaticPaths = async () => {
+  try {
+    // Faça uma chamada à API para obter a lista de IDs disponíveis
+    const response = await api.get("/serviceOrders");
+
+    // Mapeie os dados para obter um array de objetos contendo os parâmetros dos caminhos
+    const paths = response.data.map((order: serviceOrderData) => ({
+      params: { id: order.id },
+    }));
+
+    return {
+      paths,
+      fallback: "blocking",
+    };
+  } catch (error) {
+    console.error("Erro ao obter os caminhos estáticos:", error);
+    return {
+      paths: [],
+      fallback: "blocking",
+    };
+  }
 };
 
-export const getStaticProps: GetStaticProps<ServiceOrderProps> = async (
-  ctx
-) => {
+
+export const getStaticProps: GetStaticProps<ServiceOrderProps> = async (  ctx) => {
   const id = ctx.params!.id;
   const response = await api.get<serviceOrderData>(`/serviceOrders/${id}`);
 

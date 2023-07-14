@@ -26,6 +26,7 @@ const ServiceOrderProvider = ({ children }: Props) => {
   const [showAddInstrunctionModal, setShowInstructionModal] = useState<boolean>(false);
 
   const SetShowInstructionModal = () => {
+    window.scrollTo(0, 0);
     setShowInstructionModal((prevState)=> !prevState)
   }
 
