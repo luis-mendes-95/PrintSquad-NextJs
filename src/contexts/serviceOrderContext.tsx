@@ -13,7 +13,7 @@ interface Props {
 interface ServiceOrderProviderData {
   selectedOrderId: string;
   setSelectedOrderId: Dispatch<SetStateAction<string>>;
-  createServiceOrder: (data: serviceOrderRequest) => Promise<boolean>;
+  createServiceOrder: (data: serviceOrderRequest) => Promise<{ success: boolean, serviceOrderId: string }>;
 }
 
 const ServiceOrderContext = createContext<ServiceOrderProviderData>({} as ServiceOrderProviderData);
@@ -23,7 +23,7 @@ const ServiceOrderProvider = ({ children }: Props) => {
 
   const router = useRouter();
 
-  const createServiceOrder = async (data: serviceOrderRequest): Promise<boolean> => {
+  const createServiceOrder = async (data: serviceOrderRequest): Promise<{ success: boolean, serviceOrderId: string }> => {
     try {
       const cookies = parseCookies();
       const token = cookies["printsquad.token"];
@@ -36,15 +36,22 @@ const ServiceOrderProvider = ({ children }: Props) => {
       const response = await api.post("/serviceOrders", data, { headers });
 
       if (response.status === 201) {
+        const serviceOrderId = response.data.id; // Assuming the response includes the ID of the created service order
         toast.success("Ordem de Serviço Cadastrada com Sucesso!", { autoClose: 1000 });
-        return true;
+        return {
+          success: true,
+          serviceOrderId,
+        };
       }
     } catch (error) {
       console.error(error);
       toast.error("Todos os campos precisam ser preenchidos, se preencheu, só tentar novamente.");
     }
 
-    return false;
+    return {
+      success: false,
+      serviceOrderId: "",
+    };
   };
 
   return (

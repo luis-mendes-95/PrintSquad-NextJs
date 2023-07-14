@@ -4,6 +4,8 @@ import { CreateServiceOrderFormBase } from "../styles/addServiceOrderForm";
 import { useServiceOrder } from "@/contexts/serviceOrderContext";
 import { toast } from "react-toastify";
 import { useRouter } from "next/router";
+import api from "@/services/api";
+import { parseCookies } from "nookies";
 
 interface ServiceOrderFormData {
   client: string;
@@ -17,8 +19,10 @@ const ServiceOrderForm = () => {
   const [uploading, setUploading] = useState(false);
   const { register, handleSubmit } = useForm<any>();
   const { createServiceOrder } = useServiceOrder();
+  const router = useRouter();
 
-  const router = useRouter()
+  const cookies = parseCookies();
+  const token = cookies["printsquad.token"];
 
   const getDate = () => {
     const date = new Date();
@@ -43,34 +47,69 @@ const ServiceOrderForm = () => {
 
     console.log(result);
 
-    if (result) {
+    if (result.success) {
+      const serviceOrderId = result.serviceOrderId;
+
+      if (files.length === 0) {
+        // toast.success("Ordem de serviço criada com sucesso!");
+        router.push("/");
+        return;
+      }
+
       setUploading(true);
+
+      const downloadLinks: string[] = [];
 
       for (let i = 0; i < files.length; i++) {
         const file = files[i];
         const fileFormData = new FormData();
         fileFormData.append("file", file);
-  
+
         try {
-          const response = await fetch("https://api.anonfiles.com/upload", {
-            method: "POST",
-            body: fileFormData,
-          });
-  
-          const data = await response.json();
+          const response = await api.post("https://api.anonfiles.com/upload", fileFormData);
+
+          const data = response.data;
           const downloadUrl = data.data.file.url.full;
           console.log("Link de download:", downloadUrl);
-  
+
+          downloadLinks.push(downloadUrl);
+
           // Exibir a contagem do arquivo enviado
           toast.success(`Arquivo ${i + 1} de ${files.length} enviado!`);
         } catch (error) {
           console.error("Erro ao enviar o arquivo:", error);
         }
       }
-  
+
+      const filesString = downloadLinks.join("                        "); // Espaços de caracteres para separar os links
+
+      const requestBody = {
+        client: formData.client,
+        files: filesString,
+      };
+
+      const requestUrl = `serviceOrders/${serviceOrderId}`;
+
+      try {
+        const response = await api.patch(requestUrl, requestBody, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        });
+
+        if (response.status === 200) {
+          toast.success("Todos os arquivos enviados e a requisição foi feita com sucesso!");
+          router.push("/");
+        } else {
+          toast.error("Ocorreu um erro ao fazer a requisição.");
+        }
+      } catch (error) {
+        console.error("Erro ao fazer a requisição:", error);
+        toast.error("Ocorreu um erro ao fazer a requisição.");
+      }
+
       setUploading(false);
-      toast.success("Todos os arquivos enviados!")
-      router.push('/')
     }
   };
 
@@ -114,12 +153,19 @@ const ServiceOrderForm = () => {
           multiple
           onChange={(event: any) => {
             const newFiles = Array.from(event.target.files) as File[];
-            setFiles((prevState: any) => [...prevState, ...newFiles]);
+            setFiles((prevState) => [...prevState, ...newFiles]);
           }}
         />
 
         <button type="submit" className="buttonCreateOrder" disabled={uploading}>
-          {uploading ? "Enviando arquivos..." : "Criar"}
+          {uploading ? (
+            <>
+              Enviando arquivos... Aguarde... Pode levar alguns minutos...
+              <img src="https://media.giphy.com/media/r3xBH1FXWz0h55CVtj/giphy.gif" alt="Loading" style={{ width: "25%" }} />
+            </>
+          ) : (
+            "Criar"
+          )}
         </button>
       </form>
     </CreateServiceOrderFormBase>

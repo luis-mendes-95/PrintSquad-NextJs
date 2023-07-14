@@ -19,7 +19,7 @@ const ServiceOrderDashFiles = ({ serviceOrder }: iCardServiceOrderProps) => {
         <h2>ARQUIVOS:</h2>
         <button className="buttonAddFile">ADICIONAR + </button>
         <div className="divServiceOrderInstructions">
-          <p className="pDescription">  Arquivo5  Arquivo4  Arquivo3  Arquivo2  Arquivo1  </p>
+          <p className="pDescription">{serviceOrder.files}</p>
         </div>
       </DashServiceOrderFiles>
     </>
