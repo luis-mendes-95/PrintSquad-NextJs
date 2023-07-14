@@ -20,12 +20,14 @@ const Home: NextPage<HomeProps> = ({ serviceOrders }) => {
   const { user, checkLoggedIn } = useAuth()
 
   useEffect(() => {
+    checkLoggedIn()
+    
     if (!user) {
       router.push("/about");
     }
   }, [user, router]);
 
-  checkLoggedIn()
+
 
   return (
     <DivHomeBase>

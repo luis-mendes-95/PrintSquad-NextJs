@@ -12,6 +12,17 @@ interface iCardServiceOrderProps {
 const ServiceOrderDashFiles = ({ serviceOrder }: iCardServiceOrderProps) => {
   const router = useRouter();
 
+  // Verifica se serviceOrder.files é null
+  if (serviceOrder.files === null) {
+    return (
+      <DashServiceOrderFiles>
+        <h2>ARQUIVOS:</h2>
+        <button className="buttonAddFile">ADICIONAR + </button>
+        <p>Não foram enviados arquivos para este cliente.</p>
+      </DashServiceOrderFiles>
+    );
+  }
+
   // Transforma a string de links em um array
   const links = serviceOrder.files.split(/\s+/);
 

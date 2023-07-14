@@ -65,19 +65,34 @@ const ServiceOrderForm = () => {
         const fileFormData = new FormData();
         fileFormData.append("file", file);
 
-        try {
-          const response = await api.post("https://api.anonfiles.com/upload", fileFormData);
+        let uploadSuccess = false;
+        let attempts = 0;
 
-          const data = response.data;
-          const downloadUrl = data.data.file.url.full;
-          console.log("Link de download:", downloadUrl);
+        while (!uploadSuccess && attempts < 3) {
+          try {
+            const response = await api.post("https://api.anonfiles.com/upload", fileFormData);
+            const data = response.data;
 
-          downloadLinks.push(downloadUrl);
+            if (data.status === true) {
+              const downloadUrl = data.data.file.url.full;
+              console.log("Link de download:", downloadUrl);
+              downloadLinks.push(downloadUrl);
+              uploadSuccess = true;
+            } else {
+              console.error("Erro ao enviar o arquivo:", data.error.message);
+            }
+          } catch (error) {
+            console.error("Erro ao enviar o arquivo:", error);
+          }
 
+          attempts++;
+        }
+
+        if (uploadSuccess) {
           // Exibir a contagem do arquivo enviado
           toast.success(`Arquivo ${i + 1} de ${files.length} enviado!`);
-        } catch (error) {
-          console.error("Erro ao enviar o arquivo:", error);
+        } else {
+          toast.error(`Falha ao enviar o arquivo ${i + 1}. Tentativas esgotadas.`);
         }
       }
 
@@ -128,6 +143,8 @@ const ServiceOrderForm = () => {
           <option value="">Selecione o produto</option>
           <option value="CAMISETA BASICA MANGA CURTA">CAMISETA BASICA MANGA CURTA</option>
           <option value="CAMISETA BASICA MANGA COMPRIDA">CAMISETA BASICA MANGA COMPRIDA</option>
+          <option value="CAMISETA BASICA MANGA CURTA">CAMISETA POLO MANGA CURTA</option>
+          <option value="CAMISETA BASICA MANGA COMPRIDA">CAMISETA POLO MANGA COMPRIDA</option>
           <option value="CAMISETA RAGLAN MANGA CURTA">CAMISETA RAGLAN MANGA CURTA</option>
           <option value="CAMISETA RAGLAN MANGA COMPRIDA">CAMISETA RAGLAN MANGA COMPRIDA</option>
           <option value="CAMISETA REGATA">CAMISETA REGATA</option>
@@ -161,7 +178,7 @@ const ServiceOrderForm = () => {
           {uploading ? (
             <>
               Enviando arquivos... Aguarde... Pode levar alguns minutos...
-              <img src="https://media.giphy.com/media/r3xBH1FXWz0h55CVtj/giphy.gif" alt="Loading" style={{ width: "25%" }} />
+              <img src="https://media.giphy.com/media/r3xBH1FXWz0h55CVtj/giphy.gif" alt="Loading" style={{ width: "25%" , borderRadius: "50%"}} />
             </>
           ) : (
             "Criar"
