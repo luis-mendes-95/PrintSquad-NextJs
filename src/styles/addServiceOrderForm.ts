@@ -53,5 +53,15 @@ export const CreateServiceOrderFormBase = styled.div`
     select {
       overflow: scroll;
     }
+
+    .buttonCreateOrder{
+      height: 80px;
+      background-color: green;
+      color: white;
+      font-weight: bold;
+      border: none;
+      border-radius: 16px;
+      box-shadow: 1pt 1pt 5pt black;
+    }
   }
 `;
