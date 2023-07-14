@@ -13,7 +13,7 @@ interface Props {
 interface ServiceOrderProviderData {
   selectedOrderId: string;
   setSelectedOrderId: Dispatch<SetStateAction<string>>;
-  createServiceOrder: (data: serviceOrderRequest) => void;
+  createServiceOrder: (data: serviceOrderRequest) => Promise<boolean>;
 }
 
 const ServiceOrderContext = createContext<ServiceOrderProviderData>({} as ServiceOrderProviderData);
@@ -23,10 +23,8 @@ const ServiceOrderProvider = ({ children }: Props) => {
 
   const router = useRouter();
 
-  const createServiceOrder = async (data: serviceOrderRequest) => {
-
+  const createServiceOrder = async (data: serviceOrderRequest): Promise<boolean> => {
     try {
-
       const cookies = parseCookies();
       const token = cookies["printsquad.token"];
 
@@ -38,17 +36,15 @@ const ServiceOrderProvider = ({ children }: Props) => {
       const response = await api.post("/serviceOrders", data, { headers });
 
       if (response.status === 201) {
-        toast.success("Ordem de Serviço Cadastrada com Sucesso!", {autoClose:1000})
-        setTimeout(() => {
-          return "upload"
-        }, 1000);
+        toast.success("Ordem de Serviço Cadastrada com Sucesso!", { autoClose: 1000 });
+        return true;
       }
-
     } catch (error) {
       console.error(error);
-      toast.error("Todos os campos precisam ser preenchidos, se preencheu, só tentar novamente.")
+      toast.error("Todos os campos precisam ser preenchidos, se preencheu, só tentar novamente.");
     }
 
+    return false;
   };
 
   return (

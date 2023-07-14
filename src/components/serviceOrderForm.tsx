@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 import { CreateServiceOrderFormBase } from "../styles/addServiceOrderForm";
 import { useServiceOrder } from "@/contexts/serviceOrderContext";
 import { toast } from "react-toastify";
+import { useRouter } from "next/router";
 
 interface ServiceOrderFormData {
   client: string;
@@ -16,6 +17,8 @@ const ServiceOrderForm = () => {
   const [uploading, setUploading] = useState(false);
   const { register, handleSubmit } = useForm<any>();
   const { createServiceOrder } = useServiceOrder();
+
+  const router = useRouter()
 
   const getDate = () => {
     const date = new Date();
@@ -36,35 +39,39 @@ const ServiceOrderForm = () => {
     formData.files = null;
     formData.mockupImg = null;
 
-    const result = createServiceOrder(formData);
+    const result = await createServiceOrder(formData);
 
     console.log(result);
 
-    setUploading(true);
+    if (result) {
+      setUploading(true);
 
-    for (let i = 0; i < files.length; i++) {
-      const file = files[i];
-      const fileFormData = new FormData();
-      fileFormData.append("file", file);
-
-      try {
-        const response = await fetch("https://api.anonfiles.com/upload", {
-          method: "POST",
-          body: fileFormData,
-        });
-
-        const data = await response.json();
-        const downloadUrl = data.data.file.url.full;
-        console.log("Link de download:", downloadUrl);
-
-        // Exibir a contagem do arquivo enviado
-        toast.success(`Arquivo ${i + 1} de ${files.length} enviado!`);
-      } catch (error) {
-        console.error("Erro ao enviar o arquivo:", error);
+      for (let i = 0; i < files.length; i++) {
+        const file = files[i];
+        const fileFormData = new FormData();
+        fileFormData.append("file", file);
+  
+        try {
+          const response = await fetch("https://api.anonfiles.com/upload", {
+            method: "POST",
+            body: fileFormData,
+          });
+  
+          const data = await response.json();
+          const downloadUrl = data.data.file.url.full;
+          console.log("Link de download:", downloadUrl);
+  
+          // Exibir a contagem do arquivo enviado
+          toast.success(`Arquivo ${i + 1} de ${files.length} enviado!`);
+        } catch (error) {
+          console.error("Erro ao enviar o arquivo:", error);
+        }
       }
+  
+      setUploading(false);
+      toast.success("Todos os arquivos enviados!")
+      router.push('/')
     }
-
-    setUploading(false);
   };
 
   return (
