@@ -1,12 +1,13 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import Input from "./input";
 import { CreateServiceOrderFormBase } from "../styles/addServiceOrderForm";
-import { serviceOrderData } from "@/schemas/serviceOrder.schema";
+import { useServiceOrder } from "@/contexts/serviceOrderContext";
 
 const ServiceOrderForm = () => {
-  const [files, setFiles] = useState<File[]>([]);
-  const { register, handleSubmit } = useForm<serviceOrderData>();
+
+  const [files, setFiles] = useState<any>([]);
+  const { register, handleSubmit } = useForm<any>();
+  const { createServiceOrder } = useServiceOrder()
 
   const getDate = () => {
     const date = new Date();
@@ -18,16 +19,26 @@ const ServiceOrderForm = () => {
 
   const date = getDate();
 
-  const onFormSubmit = async (formData: serviceOrderData) => {
-    console.log(formData);
+  const onFormSubmit = async (formData: any) => {
+    formData.date = date;
+    formData.status = "AGUARDANDO ARTE"
+    formData.cost = "R$ 0,00";
+    formData.price = "R$ 0,00";
+    formData.margin = "R$ 0,00";
+    formData.files = null;
+    formData.mockupImg = null;
+    createServiceOrder(formData);
   };
 
   return (
     <CreateServiceOrderFormBase>
       <h2>Criar Ordem de Serviço</h2>
       <form onSubmit={handleSubmit(onFormSubmit)}>
-        <Input label="Data" type="text" {...register("date")} value={date} disabled />
-        <Input label="Cliente" type="text" {...register("client")} placeholder="Digite o nome do cliente" />
+        <label>Data:</label>
+        <input type="text" value={date} disabled />
+
+        <label>Cliente:</label>
+        <input type="text" {...register("client")} placeholder="Digite o nome do cliente" />
 
         <label>Produto:</label>
         <select {...register("product")}>
@@ -54,13 +65,11 @@ const ServiceOrderForm = () => {
         <textarea placeholder="Digite aqui informações para que a arte seja feita" {...register("description")} />
 
         <label>Arquivos para arte:</label>
-        <Input
+        <input
           type="file"
-          placeholder="https://image.com"
-          label=""
           multiple
           onChange={(event: any) => {
-            const newFiles = Array.from(event.target.files);
+            const newFiles: any = Array.from(event.target.files);
             setFiles((prevState: any) => [...prevState, ...newFiles]);
           }}
         />

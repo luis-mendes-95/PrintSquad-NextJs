@@ -18,11 +18,6 @@ export const serviceOrderSchema = z.object({
 
 export const serviceOrderSchemaRequest = serviceOrderSchema.omit({
   id: true,
-  mockupImg: true,
-  status: true,
-  cost: true,
-  price: true,
-  margin: true,
 })
 
 export const serviceOrderSchemaCreate = serviceOrderSchema.omit({
