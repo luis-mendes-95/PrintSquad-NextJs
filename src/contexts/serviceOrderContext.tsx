@@ -11,6 +11,8 @@ interface Props {
 }
 
 interface ServiceOrderProviderData {
+  showAddInstrunctionModal: boolean;
+  SetShowInstructionModal: () => void;
   selectedOrderId: string;
   setSelectedOrderId: Dispatch<SetStateAction<string>>;
   createServiceOrder: (data: serviceOrderRequest) => Promise<{ success: boolean, serviceOrderId: string }>;
@@ -19,7 +21,13 @@ interface ServiceOrderProviderData {
 const ServiceOrderContext = createContext<ServiceOrderProviderData>({} as ServiceOrderProviderData);
 
 const ServiceOrderProvider = ({ children }: Props) => {
+
   const [selectedOrderId, setSelectedOrderId] = useState<string>("");
+  const [showAddInstrunctionModal, setShowInstructionModal] = useState<boolean>(false);
+
+  const SetShowInstructionModal = () => {
+    setShowInstructionModal((prevState)=> !prevState)
+  }
 
   const router = useRouter();
 
@@ -60,6 +68,8 @@ const ServiceOrderProvider = ({ children }: Props) => {
         selectedOrderId,
         setSelectedOrderId,
         createServiceOrder,
+        SetShowInstructionModal,
+        showAddInstrunctionModal
       }}
     >
       {children}

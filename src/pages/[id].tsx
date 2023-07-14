@@ -11,15 +11,17 @@ import CardServiceOrder from "@/components/card";
 import CardPage from "@/components/cardPage";
 import ServiceOrderDashboard from "@/components/ServiceOrderDashboard";
 import ServiceOrderDashFiles from "@/components/ServiceOrderDashFiles";
+import AddInstructionFormModal from "@/components/addInstructionFormModal";
+import { useServiceOrder } from "@/contexts/serviceOrderContext";
 
 interface ServiceOrderProps {
   serviceOrder: serviceOrderData;
 }
 
-const ServiceOrder: NextPage<ServiceOrderProps> = ({
-  serviceOrder,
-}: ServiceOrderProps) => {
+const ServiceOrder: NextPage<ServiceOrderProps> = ({  serviceOrder,}: ServiceOrderProps) => {
+
   const router = useRouter();
+  const { SetShowInstructionModal, showAddInstrunctionModal } = useServiceOrder()
 
   return (
     <ServiceOrderPageBase>
@@ -53,6 +55,8 @@ const ServiceOrder: NextPage<ServiceOrderProps> = ({
         </ul>
       </main>
       <Footer />
+      {showAddInstrunctionModal&& <AddInstructionFormModal/>}
+      
     </ServiceOrderPageBase>
   );
 };
