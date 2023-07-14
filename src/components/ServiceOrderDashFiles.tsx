@@ -12,6 +12,9 @@ interface iCardServiceOrderProps {
 const ServiceOrderDashFiles = ({ serviceOrder }: iCardServiceOrderProps) => {
   const router = useRouter();
 
+  // Transforma a string de links em um array
+  const links = serviceOrder.files.split(/\s+/);
+
   return (
     <>
       <DashServiceOrderFiles>
@@ -19,7 +22,10 @@ const ServiceOrderDashFiles = ({ serviceOrder }: iCardServiceOrderProps) => {
         <h2>ARQUIVOS:</h2>
         <button className="buttonAddFile">ADICIONAR + </button>
         <div className="divServiceOrderInstructions">
-          <p className="pDescription">{serviceOrder.files}</p>
+          {/* Renderiza um link para cada link do array */}
+          {links.map((link, index) => (
+            <a href={link.trim()} target="_blank" key={index}>{link.trim()}</a>
+          ))}
         </div>
       </DashServiceOrderFiles>
     </>
