@@ -39,7 +39,12 @@ const ServiceOrder: NextPage<ServiceOrderProps> = ({
     showAddMockupModal,
     SetShowMockupImgModal,
     showMockupImgModal,
+    authorizePrinting,
   } = useServiceOrder();
+
+  const handleAuthorizePrinting = () => {
+    authorizePrinting(serviceOrder.id, serviceOrder.client);
+  };
 
   return (
     <ServiceOrderPageBase>
@@ -72,7 +77,9 @@ const ServiceOrder: NextPage<ServiceOrderProps> = ({
           >
             ENVIAR / SUBSTITUIR MOCKUP
           </button>
-          <button className="ButtonAuthorize">AUTORIZAR IMPRESSÃO</button>
+          <button className="ButtonAuthorize" onClick={handleAuthorizePrinting}>
+            AUTORIZAR IMPRESSÃO
+          </button>
         </ul>
       </main>
       <Footer />
@@ -86,12 +93,12 @@ const ServiceOrder: NextPage<ServiceOrderProps> = ({
       {showMockupImgModal && (
         <Modal>
           <div>
-            <button onClick={SetShowMockupImgModal} style={{margin:"20px 10px"}}>X</button>
-            <button  onClick={() => {window.open(serviceOrder.mockupImg, "_blank")}}  style={{margin:"20px 10px"}}>
+            <button onClick={SetShowMockupImgModal} style={{ margin: "20px 10px" }}>X</button>
+            <button onClick={() => { window.open(serviceOrder.mockupImg, "_blank") }} style={{ margin: "20px 10px" }}>
               Ver Tela Cheia
             </button>
           </div>
-          <img src={serviceOrder.mockupImg} style={{ width: "100%", transform: "scale(1.3)", margin:"30px 0 0 0" }} />
+          <img src={serviceOrder.mockupImg} style={{ width: "100%", transform: "scale(1.3)", margin: "30px 0 0 0" }} />
         </Modal>
       )}
     </ServiceOrderPageBase>

@@ -162,7 +162,7 @@ const ServiceOrderForm = () => {
           <option value="REIMPRESSÃO">REIMPRESSÃO</option>
         </select>
 
-        <label>Instrução para arte:</label>
+        <label>Instrução:</label>
         <textarea placeholder="Digite aqui informações para que a arte seja feita" {...register("description")} />
 
         <label>Arquivos para arte:</label>
