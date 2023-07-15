@@ -4,6 +4,7 @@ import Link from "next/link";
 import { CardBase, CardBasePage } from "../styles/card";
 import { GoogleFonts } from "next-google-fonts";
 import { useRouter } from "next/router";
+import { useServiceOrder } from "@/contexts/serviceOrderContext";
 
 interface iCardServiceOrderProps {
   serviceOrder: serviceOrderData;
@@ -12,6 +13,7 @@ interface iCardServiceOrderProps {
 const CardPage = ({ serviceOrder }: iCardServiceOrderProps) => {
 
   const router = useRouter()
+  const { SetShowMockupImgModal} = useServiceOrder()
 
   return (
     <CardBasePage>
@@ -43,7 +45,7 @@ const CardPage = ({ serviceOrder }: iCardServiceOrderProps) => {
 
       <div className="divMockup">
         <h3>VER MOCKUP:</h3>
-          <button className="ButtonSeeMockup">ABRIR</button>
+          <button className="ButtonSeeMockup" onClick={SetShowMockupImgModal}>ABRIR</button>
           
       </div>
 

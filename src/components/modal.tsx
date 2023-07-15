@@ -5,6 +5,7 @@ interface IModal {
 }
 
 const Modal = ({children}: IModal) => {
+  
   return (
     <DivBackgroundModal>
 

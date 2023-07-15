@@ -15,6 +15,10 @@ interface ServiceOrderProviderData {
   SetShowInstructionModal: () => void;
   showAddFileModal: boolean;
   SetShowFileModal: () => void;
+  showAddMockupModal: boolean;
+  SetShowMockupModal: () => void;
+  showMockupImgModal: boolean;
+  SetShowMockupImgModal: () => void;
   selectedOrderId: string;
   setSelectedOrderId: Dispatch<SetStateAction<string>>;
   createServiceOrder: (data: serviceOrderRequest) => Promise<{ success: boolean, serviceOrderId: string }>;
@@ -27,6 +31,8 @@ const ServiceOrderProvider = ({ children }: Props) => {
   const [selectedOrderId, setSelectedOrderId] = useState<string>("");
   const [showAddInstrunctionModal, setShowInstructionModal] = useState<boolean>(false);
   const [showAddFileModal, setShowFileModal] = useState<boolean>(false);
+  const [showAddMockupModal, setShowMockupModal] = useState<boolean>(false);
+  const [showMockupImgModal, setShowMockupImgModal] = useState<boolean>(false);
 
   const SetShowInstructionModal = () => {
     window.scrollTo(0, 0);
@@ -36,6 +42,16 @@ const ServiceOrderProvider = ({ children }: Props) => {
   const SetShowFileModal = () => {
     window.scrollTo(0, 0);
     setShowFileModal((prevState)=> !prevState)
+  }
+
+  const SetShowMockupModal = () => {
+    window.scrollTo(0, 0);
+    setShowMockupModal((prevState)=> !prevState)
+  }
+
+  const SetShowMockupImgModal = () => {
+    window.scrollTo(0, 0);
+    setShowMockupImgModal((prevState)=> !prevState)
   }
 
   const router = useRouter();
@@ -80,7 +96,11 @@ const ServiceOrderProvider = ({ children }: Props) => {
         SetShowInstructionModal,
         showAddInstrunctionModal,
         SetShowFileModal,
-        showAddFileModal
+        showAddFileModal,
+        SetShowMockupModal,
+        showAddMockupModal,
+        SetShowMockupImgModal,
+        showMockupImgModal
       }}
     >
       {children}

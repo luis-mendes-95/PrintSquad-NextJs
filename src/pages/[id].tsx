@@ -2,7 +2,12 @@ import Footer from "@/components/footer";
 import Header from "@/components/header";
 import { serviceOrderData } from "@/schemas/serviceOrder.schema";
 import api from "@/services/api";
-import { GetServerSideProps, GetStaticPaths, GetStaticProps, NextPage } from "next";
+import {
+  GetServerSideProps,
+  GetStaticPaths,
+  GetStaticProps,
+  NextPage,
+} from "next";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import nookies from "nookies";
@@ -14,15 +19,27 @@ import ServiceOrderDashFiles from "@/components/ServiceOrderDashFiles";
 import AddInstructionFormModal from "@/components/addInstructionFormModal";
 import { useServiceOrder } from "@/contexts/serviceOrderContext";
 import AddFileFormModal from "@/components/addFileFormModal";
+import AddOrChangeMockupFormModal from "@/components/AddOrChangeMockupFormModal";
+import Modal from "@/components/modal";
 
 interface ServiceOrderProps {
   serviceOrder: serviceOrderData;
 }
 
-const ServiceOrder: NextPage<ServiceOrderProps> = ({  serviceOrder,}: ServiceOrderProps) => {
-
+const ServiceOrder: NextPage<ServiceOrderProps> = ({
+  serviceOrder,
+}: ServiceOrderProps) => {
   const router = useRouter();
-  const { SetShowInstructionModal, showAddInstrunctionModal, SetShowFileModal, showAddFileModal } = useServiceOrder()
+  const {
+    SetShowInstructionModal,
+    showAddInstrunctionModal,
+    SetShowFileModal,
+    showAddFileModal,
+    SetShowMockupModal,
+    showAddMockupModal,
+    SetShowMockupImgModal,
+    showMockupImgModal,
+  } = useServiceOrder();
 
   return (
     <ServiceOrderPageBase>
@@ -49,16 +66,34 @@ const ServiceOrder: NextPage<ServiceOrderProps> = ({  serviceOrder,}: ServiceOrd
             <ServiceOrderDashFiles serviceOrder={serviceOrder} />
           </li>
 
-          <button className="ButtonSendUpdateMockup">
+          <button
+            className="ButtonSendUpdateMockup"
+            onClick={SetShowMockupModal}
+          >
             ENVIAR / SUBSTITUIR MOCKUP
           </button>
           <button className="ButtonAuthorize">AUTORIZAR IMPRESSÃO</button>
         </ul>
       </main>
       <Footer />
-      {showAddInstrunctionModal&& <AddInstructionFormModal serviceOrder={serviceOrder}/>}
-      {showAddFileModal&& <AddFileFormModal serviceOrder={serviceOrder} />}
-      
+      {showAddInstrunctionModal && (
+        <AddInstructionFormModal serviceOrder={serviceOrder} />
+      )}
+      {showAddFileModal && <AddFileFormModal serviceOrder={serviceOrder} />}
+      {showAddMockupModal && (
+        <AddOrChangeMockupFormModal serviceOrder={serviceOrder} />
+      )}
+      {showMockupImgModal && (
+        <Modal>
+          <div>
+            <button onClick={SetShowMockupImgModal} style={{margin:"20px 10px"}}>X</button>
+            <button  onClick={() => {window.open(serviceOrder.mockupImg, "_blank")}}  style={{margin:"20px 10px"}}>
+              Ver Tela Cheia
+            </button>
+          </div>
+          <img src={serviceOrder.mockupImg} style={{ width: "100%", transform: "scale(1.3)", margin:"30px 0 0 0" }} />
+        </Modal>
+      )}
     </ServiceOrderPageBase>
   );
 };
@@ -86,8 +121,9 @@ export const getStaticPaths: GetStaticPaths = async () => {
   }
 };
 
-
-export const getStaticProps: GetStaticProps<ServiceOrderProps> = async (  ctx) => {
+export const getStaticProps: GetStaticProps<ServiceOrderProps> = async (
+  ctx
+) => {
   const id = ctx.params!.id;
   const response = await api.get<serviceOrderData>(`/serviceOrders/${id}`);
 
