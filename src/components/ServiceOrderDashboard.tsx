@@ -13,7 +13,9 @@ interface iCardServiceOrderProps {
 
 const ServiceOrderDashboard = ({ serviceOrder }: iCardServiceOrderProps) => {
   const router = useRouter();
-  const { SetShowInstructionModal } = useServiceOrder()
+  const { SetShowInstructionModal } = useServiceOrder();
+
+  const descriptionArray = serviceOrder.description.split("|||");
 
   return (
     <>
@@ -22,7 +24,9 @@ const ServiceOrderDashboard = ({ serviceOrder }: iCardServiceOrderProps) => {
         <h2>INSTRUÇÕES:</h2>
         <button className="buttonAddInstruction" onClick={SetShowInstructionModal}>ADICIONAR + </button>
         <div className="divServiceOrderInstructions">
-          <p className="pDescription">{serviceOrder.description}</p>
+          {descriptionArray.map((description, index) => (
+            <p key={index} className="pDescription">{description}</p>
+          ))}
         </div>
       </DashServiceOrder>
     </>

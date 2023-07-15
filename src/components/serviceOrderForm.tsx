@@ -42,6 +42,7 @@ const ServiceOrderForm = () => {
     formData.margin = "R$ 0,00";
     formData.files = null;
     formData.mockupImg = null;
+    formData.description = formData.description + "|||"
 
     const result = await createServiceOrder(formData);
 

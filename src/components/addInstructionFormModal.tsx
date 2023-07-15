@@ -23,7 +23,8 @@ const AddInstructionFormModal = ({ serviceOrder }: iCardServiceOrderProps) => {
   const onSave = async () => {
     const formData = {
       client: serviceOrder.client,
-      description: `${instruction}| . | . | . | . | . | . | . | . | . | . | . | . | . | . | . |${serviceOrder.description}`,
+      description: `${instruction} ||| ${serviceOrder.description}`,
+      status: "AGUARDANDO ARTE"
     };
 
     try {
