@@ -34,9 +34,9 @@ const CardServiceOrder = ({ serviceOrder }: iCardServiceOrderProps) => {
 
       <div className="divStatus">
         <h3>STATUS:</h3>
-        {serviceOrder.status === "Aguardando Arte" && <p className="pending">{serviceOrder.status}</p>}
-        {serviceOrder.status === "Aguardando Cliente" && <p className="waiting">{serviceOrder.status}</p>}
-        {serviceOrder.status === "Aprovada" && <p className="aproved">{serviceOrder.status}</p>}
+        {serviceOrder.status === "AGUARDANDO ARTE" && <p className="pending">{serviceOrder.status}</p>}
+        {serviceOrder.status === "AGUARDANDO CLIENTE" && <p className="waiting">{serviceOrder.status}</p>}
+        {serviceOrder.status === "APROVADA" && <p className="aproved">{serviceOrder.status}</p>}
         
       </div>
 

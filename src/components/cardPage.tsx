@@ -4,6 +4,7 @@ import Link from "next/link";
 import { CardBase, CardBasePage } from "../styles/card";
 import { GoogleFonts } from "next-google-fonts";
 import { useRouter } from "next/router";
+import { useServiceOrder } from "@/contexts/serviceOrderContext";
 
 interface iCardServiceOrderProps {
   serviceOrder: serviceOrderData;
@@ -12,6 +13,7 @@ interface iCardServiceOrderProps {
 const CardPage = ({ serviceOrder }: iCardServiceOrderProps) => {
 
   const router = useRouter()
+  const { SetShowMockupImgModal} = useServiceOrder()
 
   return (
     <CardBasePage>
@@ -35,15 +37,15 @@ const CardPage = ({ serviceOrder }: iCardServiceOrderProps) => {
 
       <div className="divStatus">
         <h3>STATUS:</h3>
-        {serviceOrder.status === "Aguardando Arte" && <p className="pending">{serviceOrder.status}</p>}
-        {serviceOrder.status === "Aguardando Cliente" && <p className="waiting">{serviceOrder.status}</p>}
-        {serviceOrder.status === "Aprovada" && <p className="aproved">{serviceOrder.status}</p>}
+        {serviceOrder.status === "AGUARDANDO ARTE" && <p className="pending">{serviceOrder.status}</p>}
+        {serviceOrder.status === "AGUARDANDO CLIENTE" && <p className="waiting">{serviceOrder.status}</p>}
+        {serviceOrder.status === "APROVADA" && <p className="aproved">{serviceOrder.status}</p>}
         
       </div>
 
       <div className="divMockup">
         <h3>VER MOCKUP:</h3>
-          <button className="ButtonSeeMockup">ABRIR</button>
+          <button className="ButtonSeeMockup" onClick={SetShowMockupImgModal}>ABRIR</button>
           
       </div>
 

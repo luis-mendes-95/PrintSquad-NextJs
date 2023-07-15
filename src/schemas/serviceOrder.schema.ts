@@ -15,19 +15,16 @@ export const serviceOrderSchema = z.object({
   margin: z.string(),
 });
 
+
 export const serviceOrderSchemaRequest = serviceOrderSchema.omit({
   id: true,
-  date: true,
-  client: true,
-  product: true,
-  printType: true,
-  description: true,
-  status: true,
-  cost: true,
-  price: true,
-  margin: true,
-});
+})
+
+export const serviceOrderSchemaCreate = serviceOrderSchema.omit({
+  id: true
+
+})
+
 
 export type serviceOrderRequest = z.infer<typeof serviceOrderSchemaRequest>;
-
 export type serviceOrderData = z.infer<typeof serviceOrderSchema>;

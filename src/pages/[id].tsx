@@ -2,7 +2,12 @@ import Footer from "@/components/footer";
 import Header from "@/components/header";
 import { serviceOrderData } from "@/schemas/serviceOrder.schema";
 import api from "@/services/api";
-import { GetServerSideProps, GetStaticProps, NextPage } from "next";
+import {
+  GetServerSideProps,
+  GetStaticPaths,
+  GetStaticProps,
+  NextPage,
+} from "next";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import nookies from "nookies";
@@ -11,6 +16,11 @@ import CardServiceOrder from "@/components/card";
 import CardPage from "@/components/cardPage";
 import ServiceOrderDashboard from "@/components/ServiceOrderDashboard";
 import ServiceOrderDashFiles from "@/components/ServiceOrderDashFiles";
+import AddInstructionFormModal from "@/components/addInstructionFormModal";
+import { useServiceOrder } from "@/contexts/serviceOrderContext";
+import AddFileFormModal from "@/components/addFileFormModal";
+import AddOrChangeMockupFormModal from "@/components/AddOrChangeMockupFormModal";
+import Modal from "@/components/modal";
 
 interface ServiceOrderProps {
   serviceOrder: serviceOrderData;
@@ -20,6 +30,21 @@ const ServiceOrder: NextPage<ServiceOrderProps> = ({
   serviceOrder,
 }: ServiceOrderProps) => {
   const router = useRouter();
+  const {
+    SetShowInstructionModal,
+    showAddInstrunctionModal,
+    SetShowFileModal,
+    showAddFileModal,
+    SetShowMockupModal,
+    showAddMockupModal,
+    SetShowMockupImgModal,
+    showMockupImgModal,
+    authorizePrinting,
+  } = useServiceOrder();
+
+  const handleAuthorizePrinting = () => {
+    authorizePrinting(serviceOrder.id, serviceOrder.client);
+  };
 
   return (
     <ServiceOrderPageBase>
@@ -46,26 +71,61 @@ const ServiceOrder: NextPage<ServiceOrderProps> = ({
             <ServiceOrderDashFiles serviceOrder={serviceOrder} />
           </li>
 
-          <button className="ButtonSendUpdateMockup">
+          <button
+            className="ButtonSendUpdateMockup"
+            onClick={SetShowMockupModal}
+          >
             ENVIAR / SUBSTITUIR MOCKUP
           </button>
-          <button className="ButtonAuthorize">AUTORIZAR IMPRESSÃO</button>
+          <button className="ButtonAuthorize" onClick={handleAuthorizePrinting}>
+            AUTORIZAR IMPRESSÃO
+          </button>
         </ul>
       </main>
       <Footer />
+      {showAddInstrunctionModal && (
+        <AddInstructionFormModal serviceOrder={serviceOrder} />
+      )}
+      {showAddFileModal && <AddFileFormModal serviceOrder={serviceOrder} />}
+      {showAddMockupModal && (
+        <AddOrChangeMockupFormModal serviceOrder={serviceOrder} />
+      )}
+      {showMockupImgModal && (
+        <Modal>
+          <div>
+            <button onClick={SetShowMockupImgModal} style={{ margin: "20px 10px" }}>X</button>
+            <button onClick={() => { window.open(serviceOrder.mockupImg, "_blank") }} style={{ margin: "20px 10px" }}>
+              Ver Tela Cheia
+            </button>
+          </div>
+          <img src={serviceOrder.mockupImg} style={{ width: "100%", transform: "scale(1.3)", margin: "30px 0 0 0" }} />
+        </Modal>
+      )}
     </ServiceOrderPageBase>
   );
 };
 
-export const getStaticPaths = async () => {
-  return {
-    paths: [
-      {
-        params: { id: "847b5e73-1215-4287-8246-8cd6415f952e" },
-      },
-    ],
-    fallback: "blocking",
-  };
+export const getStaticPaths: GetStaticPaths = async () => {
+  try {
+    // Faça uma chamada à API para obter a lista de IDs disponíveis
+    const response = await api.get("/serviceOrders");
+
+    // Mapeie os dados para obter um array de objetos contendo os parâmetros dos caminhos
+    const paths = response.data.map((order: serviceOrderData) => ({
+      params: { id: order.id },
+    }));
+
+    return {
+      paths,
+      fallback: "blocking",
+    };
+  } catch (error) {
+    console.error("Erro ao obter os caminhos estáticos:", error);
+    return {
+      paths: [],
+      fallback: "blocking",
+    };
+  }
 };
 
 export const getStaticProps: GetStaticProps<ServiceOrderProps> = async (

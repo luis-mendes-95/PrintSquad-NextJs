@@ -6,6 +6,8 @@ import Header from "@/components/header";
 import Footer from "@/components/footer";
 import {DivHomeBase} from "../styles/home"
 import { useAuth } from "@/contexts/authContext";
+import { useRouter } from "next/router";
+import { useEffect } from "react";
 
 interface HomeProps {
   serviceOrders: serviceOrderData[];
@@ -13,7 +15,19 @@ interface HomeProps {
 
 const Home: NextPage<HomeProps> = ({ serviceOrders }) => {
 
-  const { user } = useAuth()
+  const router = useRouter();
+
+  const { user, checkLoggedIn } = useAuth()
+
+  useEffect(() => {
+    checkLoggedIn()
+    
+    if (!user) {
+      router.push("/about");
+    }
+  }, [user, router]);
+
+
 
   return (
     <DivHomeBase>
@@ -49,7 +63,7 @@ const Home: NextPage<HomeProps> = ({ serviceOrders }) => {
 
 export const getServerSideProps: GetServerSideProps = async (cxt) => {
   const token =
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImF2YWlsdG9uamVzdXM1QGhvdG1haWwuY29tIiwiaWF0IjoxNjg4MTAwMzA0LCJleHAiOjE2ODgxMDM5MDQsInN1YiI6IjExZDYxZWMwLWI0MWYtNGY5Yy04YWMzLTVkNTlhZjUyMGY2OCJ9.HUSzcGNFnP2Yx-dOoTKsN0hwobIDY-aOAo5zKucDrUc";
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImF2YWlsdG9uamVzdXM1QGhvdG1haWwuY29tIiwiaWF0IjoxNjg5Mzg3NzU5LCJleHAiOjE2ODkzOTEzNTksInN1YiI6IjJjOWQxNjQ1LWEyY2MtNDc0Ny1iMzQ5LTQ4ZDcyNDkxMDM5YyJ9.QjXdKNeVhh45dFrmYfNnvyJlAO_BOw-deHE0SRUEkig";
 
   const response = await api.get<serviceOrderData[]>("/serviceOrders", {
     headers: {

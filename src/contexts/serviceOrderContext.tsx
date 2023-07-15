@@ -1,109 +1,135 @@
-import {
-  Dispatch,
-  ReactNode,
-  SetStateAction,
-  createContext,
-  useContext,
-  useState,
-} from "react";
+import { Dispatch, ReactNode, SetStateAction, createContext, useContext, useState } from "react";
 import { useRouter } from "next/router";
 import api from "@/services/api";
-import {
-  serviceOrderData,
-  serviceOrderRequest,
-} from "@/schemas/serviceOrder.schema";
+import { serviceOrderData, serviceOrderRequest } from "@/schemas/serviceOrder.schema";
 import { parseCookies } from "nookies";
 import Toast from "@/components/toast";
+import { toast } from "react-toastify";
 
 interface Props {
   children: ReactNode;
 }
 
 interface ServiceOrderProviderData {
+  showAddInstrunctionModal: boolean;
+  SetShowInstructionModal: () => void;
+  showAddFileModal: boolean;
+  SetShowFileModal: () => void;
+  showAddMockupModal: boolean;
+  SetShowMockupModal: () => void;
+  showMockupImgModal: boolean;
+  SetShowMockupImgModal: () => void;
   selectedOrderId: string;
-  setSelectedOrderId: (serviceOrderId: string) => void;
-  page: number;
-  setPage: Dispatch<SetStateAction<number>>;
-  serviceOrderInfo: serviceOrderRequest;
-  setServiceOrderInfo: Dispatch<SetStateAction<serviceOrderRequest>>;
-  mockupImage: File | null;
-  files: File | null;
-  setCoverImage: Dispatch<SetStateAction<File | null>>;
-
-  setServiceOrder: Dispatch<SetStateAction<File | null>>;
-  uploadServiceOrderFiles: (
-    serviceOrderId: string,
-    files: File,
-    mockupImage: File
-  ) => void;
+  setSelectedOrderId: Dispatch<SetStateAction<string>>;
+  createServiceOrder: (data: serviceOrderRequest) => Promise<{ success: boolean, serviceOrderId: string }>;
+  authorizePrinting: (id: string, client: string) => Promise<void>;
 }
 
-const ServiceOrderContext = createContext<ServiceOrderProviderData>(
-  {} as ServiceOrderProviderData
-);
+const ServiceOrderContext = createContext<ServiceOrderProviderData>({} as ServiceOrderProviderData);
 
 const ServiceOrderProvider = ({ children }: Props) => {
-  const router = useRouter();
-  const [page, setPage] = useState(0);
-  const cookies = parseCookies();
-
-  if (cookies["printsquad.token"]) {
-    api.defaults.headers.common.authorization = `Bearer ${cookies["printsquad.token"]}`;
-  }
-  const [serviceOrderInfo, setServiceOrderInfo] = useState({
-    files: "",
-    mockupImg: "",
-  });
-
   const [selectedOrderId, setSelectedOrderId] = useState<string>("");
+  const [showAddInstrunctionModal, setShowInstructionModal] = useState<boolean>(false);
+  const [showAddFileModal, setShowFileModal] = useState<boolean>(false);
+  const [showAddMockupModal, setShowMockupModal] = useState<boolean>(false);
+  const [showMockupImgModal, setShowMockupImgModal] = useState<boolean>(false);
+  const router = useRouter();
 
-  const [mockupImage, setMockupImage] = useState<File | null>(null);
-  const [files, setFile] = useState<File | null>(null);
-
-  const uploadFiles = async (    serviceOrderId: string,    files: File,    mockupImage: File  ) => {
-
-    const config = { headers: { "Content-Type": "multipart/form-data" } };
-
-    const fd = new FormData();
-
-    console.log(mockupImage)
-
-    if (mockupImage.name.includes("jpg") || mockupImage.name.includes("png")) {
-      fd.append("mockupImage", mockupImage);
-      fd.append("files", files);
-
-      const status = await api
-        .patch(`serviceOrders/upload/${serviceOrderId}`, fd, config)
-        .then((res: any) => res.status);
-      return { status };
-    }
-    return { status: 400 };
+  const SetShowInstructionModal = () => {
+    window.scrollTo(0, 0);
+    setShowInstructionModal((prevState) => !prevState);
   };
 
-  const uploadServiceOrderFiles = async (    serviceOrderId: string,    files: File,    mockupImage: File  ) => {
+  const SetShowFileModal = () => {
+    window.scrollTo(0, 0);
+    setShowFileModal((prevState) => !prevState);
+  };
 
-    const response = await uploadFiles(serviceOrderId, files!, mockupImage!);
+  const SetShowMockupModal = () => {
+    window.scrollTo(0, 0);
+    setShowMockupModal((prevState) => !prevState);
+  };
 
-    if (response.status === 200) {
-      Toast({ message: "Arquivo enviado com sucesso !", isSucess: true });
+  const SetShowMockupImgModal = () => {
+    window.scrollTo(0, 0);
+    setShowMockupImgModal((prevState) => !prevState);
+  };
+
+  const createServiceOrder = async (data: serviceOrderRequest): Promise<{ success: boolean, serviceOrderId: string }> => {
+    try {
+      const cookies = parseCookies();
+      const token = cookies["printsquad.token"];
+
+      const headers = {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      };
+
+      const response = await api.post("/serviceOrders", data, { headers });
+
+      if (response.status === 201) {
+        const serviceOrderId = response.data.id; // Assuming the response includes the ID of the created service order
+        toast.success("Ordem de Serviço Cadastrada com Sucesso!", { autoClose: 1000 });
+        return {
+          success: true,
+          serviceOrderId,
+        };
+      }
+    } catch (error) {
+      console.error(error);
+      toast.error("Todos os campos precisam ser preenchidos, se preencheu, só tentar novamente.");
     }
-    
+
+    return {
+      success: false,
+      serviceOrderId: "",
+    };
+  };
+
+  const authorizePrinting = async (id: string, client: string): Promise<void> => {
+    try {
+      const cookies = parseCookies();
+      const token = cookies["printsquad.token"];
+
+      const headers = {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      };
+
+      const body = {
+        client,
+        status: "APROVADA",
+      };
+
+      const response = await api.patch(`/serviceOrders/${id}`, body, { headers });
+
+      if (response.status === 200) {
+        toast.success("Impressão autorizada com sucesso!", {autoClose: 1000});
+        router.push(`/${id}`)
+      } else {
+        toast.error("Ocorreu um erro ao autorizar a impressão.");
+      }
+    } catch (error) {
+      console.error("Erro ao autorizar a impressão:", error);
+      toast.error("Ocorreu um erro ao autorizar a impressão.");
+    }
   };
 
   return (
     <ServiceOrderContext.Provider
       value={{
-        page,
-        setPage,
-        serviceOrderInfo,
-        setServiceOrderInfo,
-        uploadServiceOrderFiles,
-        mockupImage,
-        files,
-        setCoverImage: () => {}, // Adicione esta linha
-        setServiceOrder: () => {}, // Adicione esta linha
         selectedOrderId,
         setSelectedOrderId,
+        createServiceOrder,
+        authorizePrinting,
+        SetShowInstructionModal,
+        showAddInstrunctionModal,
+        SetShowFileModal,
+        showAddFileModal,
+        SetShowMockupModal,
+        showAddMockupModal,
+        SetShowMockupImgModal,
+        showMockupImgModal
       }}
     >
       {children}
@@ -111,6 +137,6 @@ const ServiceOrderProvider = ({ children }: Props) => {
   );
 };
 
-export const useServiceOrder = () => useContext(ServiceOrderContext);
+export const useServiceOrder = (): ServiceOrderProviderData => useContext(ServiceOrderContext);
 
 export default ServiceOrderProvider;
