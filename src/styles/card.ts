@@ -380,7 +380,6 @@ export const DashServiceOrder = styled.div`
     }
 
     .pDescription {
-      height: 100%;
       color: black;
       text-shadow: none;
       background-color: lightblue;

@@ -13,6 +13,7 @@ import ServiceOrderDashboard from "@/components/ServiceOrderDashboard";
 import ServiceOrderDashFiles from "@/components/ServiceOrderDashFiles";
 import AddInstructionFormModal from "@/components/addInstructionFormModal";
 import { useServiceOrder } from "@/contexts/serviceOrderContext";
+import AddFileFormModal from "@/components/addFileFormModal";
 
 interface ServiceOrderProps {
   serviceOrder: serviceOrderData;
@@ -21,7 +22,7 @@ interface ServiceOrderProps {
 const ServiceOrder: NextPage<ServiceOrderProps> = ({  serviceOrder,}: ServiceOrderProps) => {
 
   const router = useRouter();
-  const { SetShowInstructionModal, showAddInstrunctionModal } = useServiceOrder()
+  const { SetShowInstructionModal, showAddInstrunctionModal, SetShowFileModal, showAddFileModal } = useServiceOrder()
 
   return (
     <ServiceOrderPageBase>
@@ -56,6 +57,7 @@ const ServiceOrder: NextPage<ServiceOrderProps> = ({  serviceOrder,}: ServiceOrd
       </main>
       <Footer />
       {showAddInstrunctionModal&& <AddInstructionFormModal serviceOrder={serviceOrder}/>}
+      {showAddFileModal&& <AddFileFormModal serviceOrder={serviceOrder} />}
       
     </ServiceOrderPageBase>
   );

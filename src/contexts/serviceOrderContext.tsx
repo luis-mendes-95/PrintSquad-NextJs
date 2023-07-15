@@ -13,6 +13,8 @@ interface Props {
 interface ServiceOrderProviderData {
   showAddInstrunctionModal: boolean;
   SetShowInstructionModal: () => void;
+  showAddFileModal: boolean;
+  SetShowFileModal: () => void;
   selectedOrderId: string;
   setSelectedOrderId: Dispatch<SetStateAction<string>>;
   createServiceOrder: (data: serviceOrderRequest) => Promise<{ success: boolean, serviceOrderId: string }>;
@@ -24,10 +26,16 @@ const ServiceOrderProvider = ({ children }: Props) => {
 
   const [selectedOrderId, setSelectedOrderId] = useState<string>("");
   const [showAddInstrunctionModal, setShowInstructionModal] = useState<boolean>(false);
+  const [showAddFileModal, setShowFileModal] = useState<boolean>(false);
 
   const SetShowInstructionModal = () => {
     window.scrollTo(0, 0);
     setShowInstructionModal((prevState)=> !prevState)
+  }
+
+  const SetShowFileModal = () => {
+    window.scrollTo(0, 0);
+    setShowFileModal((prevState)=> !prevState)
   }
 
   const router = useRouter();
@@ -70,7 +78,9 @@ const ServiceOrderProvider = ({ children }: Props) => {
         setSelectedOrderId,
         createServiceOrder,
         SetShowInstructionModal,
-        showAddInstrunctionModal
+        showAddInstrunctionModal,
+        SetShowFileModal,
+        showAddFileModal
       }}
     >
       {children}
