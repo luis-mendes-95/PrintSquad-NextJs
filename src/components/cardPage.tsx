@@ -40,6 +40,9 @@ const CardPage = ({ serviceOrder }: iCardServiceOrderProps) => {
         {serviceOrder.status === "AGUARDANDO ARTE" && <p className="pending">{serviceOrder.status}</p>}
         {serviceOrder.status === "AGUARDANDO CLIENTE" && <p className="waiting">{serviceOrder.status}</p>}
         {serviceOrder.status === "APROVADA" && <p className="aproved">{serviceOrder.status}</p>}
+        {serviceOrder.status === "EM PRODUÇÃO" && <p className="aproved" style={{color: "brown"}}>{serviceOrder.status}</p>}
+        {serviceOrder.status === "CONCLUÍDA" && <p className="aproved" style={{color: "lightblue"}}>{serviceOrder.status}</p>}
+        {serviceOrder.status === "ARQUIVADA" && <p className="aproved" style={{color: "gray"}}>{serviceOrder.status}</p>}
         
       </div>
 

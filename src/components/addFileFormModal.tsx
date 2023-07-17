@@ -51,7 +51,6 @@ const AddFileFormModal = ({ serviceOrder }: iCardServiceOrderProps) => {
 
           if (data.status === true) {
             const downloadUrl = data.data.file.url.full;
-            console.log("Link de download:", downloadUrl);
             downloadLinks.push(downloadUrl);
             toast.success(`Arquivo ${i + 1} de ${files.length} enviado!`);
             uploadSuccess = true;

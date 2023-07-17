@@ -9,6 +9,8 @@ import { useAuth } from "@/contexts/authContext";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 import { parseCookies } from "nookies";
+import { useServiceOrder } from "@/contexts/serviceOrderContext";
+import FilterModal from "@/components/filterModal";
 
 interface HomeProps {
   serviceOrders: serviceOrderData[];
@@ -19,6 +21,7 @@ const Home: NextPage<HomeProps> = ({ serviceOrders }) => {
   const router = useRouter();
 
   const { user, checkLoggedIn } = useAuth();
+  const { showCards, showFilterModal } = useServiceOrder()
 
   useEffect(() => {
 
@@ -37,11 +40,20 @@ const Home: NextPage<HomeProps> = ({ serviceOrders }) => {
               <div className="divNoOrders">Você não possui nenhuma ordem de serviço</div>
             )}
             {serviceOrders.map((individualServiceOrder) => {
-              return (
-                <li key={individualServiceOrder.id}>
-                  <CardServiceOrder serviceOrder={individualServiceOrder} />
-                </li>
-              );
+              if (showCards === "TODOS" && individualServiceOrder.status !== "ARQUIVADA" && individualServiceOrder.status !== "CONCLUÍDA"){
+                return (
+                  <li key={individualServiceOrder.id}>
+                    <CardServiceOrder serviceOrder={individualServiceOrder} />
+                  </li>
+                );
+              } else if (individualServiceOrder.status === showCards) {
+                return (
+                  <li key={individualServiceOrder.id}>
+                    <CardServiceOrder serviceOrder={individualServiceOrder} />
+                  </li>
+                );
+              }
+
             })}
           </ul>
         ) : (
@@ -49,6 +61,7 @@ const Home: NextPage<HomeProps> = ({ serviceOrders }) => {
         )}
       </main>
       <Footer />
+      {showFilterModal && <FilterModal/>}
     </DivHomeBase>
   );
 };

@@ -21,15 +21,16 @@ import { useServiceOrder } from "@/contexts/serviceOrderContext";
 import AddFileFormModal from "@/components/addFileFormModal";
 import AddOrChangeMockupFormModal from "@/components/AddOrChangeMockupFormModal";
 import Modal from "@/components/modal";
+import FilterModal from "@/components/filterModal";
 
 interface ServiceOrderProps {
   serviceOrder: serviceOrderData;
 }
 
-const ServiceOrder: NextPage<ServiceOrderProps> = ({
-  serviceOrder,
-}: ServiceOrderProps) => {
+const ServiceOrder: NextPage<ServiceOrderProps> = ({  serviceOrder,}: ServiceOrderProps) => {
+
   const router = useRouter();
+
   const {
     SetShowInstructionModal,
     showAddInstrunctionModal,
@@ -40,10 +41,44 @@ const ServiceOrder: NextPage<ServiceOrderProps> = ({
     SetShowMockupImgModal,
     showMockupImgModal,
     authorizePrinting,
+    showFilterModal,
+    sentToPrinting,
+    finnishOrder,
+    sentToArchive,
+    SetServiceOrders,
+    serviceOrders
   } = useServiceOrder();
 
   const handleAuthorizePrinting = () => {
-    authorizePrinting(serviceOrder.id, serviceOrder.client);
+    authorizePrinting(
+      serviceOrder.id,
+      serviceOrder.client,
+      serviceOrder.description
+    );
+  };
+
+  const handleSentToPrinting = () => {
+    sentToPrinting(
+      serviceOrder.id,
+      serviceOrder.client,
+      serviceOrder.description
+    );
+  };
+
+  const handleFinnish = () => {
+    finnishOrder(
+      serviceOrder.id,
+      serviceOrder.client,
+      serviceOrder.description
+    );
+  };
+
+  const handleArchive = () => {
+    sentToArchive(
+      serviceOrder.id,
+      serviceOrder.client,
+      serviceOrder.description
+    );
   };
 
   return (
@@ -71,18 +106,67 @@ const ServiceOrder: NextPage<ServiceOrderProps> = ({
             <ServiceOrderDashFiles serviceOrder={serviceOrder} />
           </li>
 
-          <button
-            className="ButtonSendUpdateMockup"
-            onClick={SetShowMockupModal}
-          >
-            ENVIAR / SUBSTITUIR MOCKUP
-          </button>
-          <button className="ButtonAuthorize" onClick={handleAuthorizePrinting}>
-            AUTORIZAR IMPRESSÃO
-          </button>
+          {serviceOrder.status === "AGUARDANDO ARTE" && (
+            <button
+              className="ButtonSendUpdateMockup"
+              onClick={SetShowMockupModal}
+            >
+              ENVIAR / SUBSTITUIR MOCKUP
+            </button>
+          )}
+
+          {serviceOrder.status === "AGUARDANDO ARTE" && (
+            <button
+              className="ButtonAuthorize"
+              onClick={handleSentToPrinting}
+              style={{ backgroundColor: "brown" }}
+            >
+              ENVIADOS PARA IMPRESSÃO
+            </button>
+          )}
+          
+
+          {serviceOrder.status === "AGUARDANDO CLIENTE" && (
+            <button
+              className="ButtonAuthorize"
+              onClick={handleAuthorizePrinting}
+            >
+              AUTORIZAR IMPRESSÃO
+            </button>
+          )}
+
+          {serviceOrder.status === "APROVADA" && (
+            <button
+              className="ButtonAuthorize"
+              onClick={handleSentToPrinting}
+              style={{ backgroundColor: "brown" }}
+            >
+              ENVIADOS PARA IMPRESSÃO
+            </button>
+          )}
+
+          {serviceOrder.status === "EM PRODUÇÃO" && (
+            <button
+              className="ButtonAuthorize"
+              onClick={handleFinnish}
+              style={{ backgroundColor: "green" }}
+            >
+              CONCLUIR PRODUÇÃO
+            </button>
+          )}
+
+          {serviceOrder.status === "CONCLUÍDA" && (
+            <button
+              className="ButtonAuthorize"
+              onClick={handleArchive}
+              style={{ backgroundColor: "brown" }}
+            >
+              ARQUIVAR
+            </button>
+          )}
         </ul>
       </main>
-      <Footer />
+      <Footer/>
       {showAddInstrunctionModal && (
         <AddInstructionFormModal serviceOrder={serviceOrder} />
       )}
@@ -93,14 +177,32 @@ const ServiceOrder: NextPage<ServiceOrderProps> = ({
       {showMockupImgModal && (
         <Modal>
           <div>
-            <button onClick={SetShowMockupImgModal} style={{ margin: "20px 10px" }}>X</button>
-            <button onClick={() => { window.open(serviceOrder.mockupImg, "_blank") }} style={{ margin: "20px 10px" }}>
+            <button
+              onClick={SetShowMockupImgModal}
+              style={{ margin: "20px 10px" }}
+            >
+              X
+            </button>
+            <button
+              onClick={() => {
+                window.open(serviceOrder.mockupImg, "_blank");
+              }}
+              style={{ margin: "20px 10px" }}
+            >
               Ver Tela Cheia
             </button>
           </div>
-          <img src={serviceOrder.mockupImg} style={{ width: "100%", transform: "scale(1.3)", margin: "30px 0 0 0" }} />
+          <img
+            src={serviceOrder.mockupImg}
+            style={{
+              width: "100%",
+              transform: "scale(1.3)",
+              margin: "30px 0 0 0",
+            }}
+          />
         </Modal>
       )}
+      {showFilterModal && <FilterModal />}
     </ServiceOrderPageBase>
   );
 };
@@ -128,13 +230,14 @@ export const getStaticPaths: GetStaticPaths = async () => {
   }
 };
 
-export const getStaticProps: GetStaticProps<ServiceOrderProps> = async (
-  ctx
-) => {
+export const getStaticProps: GetStaticProps<ServiceOrderProps> = async (  ctx  ) => {
+
   const id = ctx.params!.id;
+
   const response = await api.get<serviceOrderData>(`/serviceOrders/${id}`);
 
   return { props: { serviceOrder: response.data }, revalidate: 60 };
+
 };
 
 export default ServiceOrder;

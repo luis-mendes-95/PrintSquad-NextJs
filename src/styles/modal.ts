@@ -52,4 +52,22 @@ export const DivBackgroundModal = styled.div`
   h2{
     padding: 10px;
   }
+
+  .divBackgroundFilter{
+    display: flex; 
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 10px;
+
+    margin: 20px 0;
+
+    button{
+      width: 40%;
+      background-color: white;
+      font-weight: bold;
+      margin: 0;
+      height: 40px;
+      font-size: 8pt;
+    }
+  }
 `;

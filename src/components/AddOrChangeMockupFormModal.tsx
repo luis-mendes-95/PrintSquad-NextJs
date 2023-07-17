@@ -12,7 +12,7 @@ interface iCardServiceOrderProps {
 }
 
 const AddOrChangeMockupFormModal = ({ serviceOrder }: iCardServiceOrderProps) => {
-  const { SetShowMockupModal } = useServiceOrder();
+  const { SetShowMockupModal, getAllServiceOrders } = useServiceOrder();
   const [uploading, setUploading] = useState(false);
   const router = useRouter();
 
@@ -61,6 +61,7 @@ const AddOrChangeMockupFormModal = ({ serviceOrder }: iCardServiceOrderProps) =>
         try {
           await api.patch(requestUrl, requestBody);
           SetShowMockupModal();
+          getAllServiceOrders()
           router.push(`/${serviceOrder.id}`);
         } catch (error) {
           console.error("Erro ao atualizar a serviceOrder:", error);

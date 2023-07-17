@@ -12,7 +12,6 @@ const LoginForm = () => {
   const { login } = useAuth();
 
   const onFormSubmit = async (formData: LoginData) => {
-    console.log(formData);
     login(formData);
   };
 
