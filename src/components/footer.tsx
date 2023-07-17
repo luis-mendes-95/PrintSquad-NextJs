@@ -1,10 +1,17 @@
 import { useAuth } from "@/contexts/authContext";
+import { useServiceOrder } from "@/contexts/serviceOrderContext";
+import { serviceOrderData } from "@/schemas/serviceOrder.schema";
 import { FooterBase } from "@/styles/footer";
+import { NextPage } from "next";
 import { GoogleFonts } from "next-google-fonts";
 import { useRouter } from "next/router";
 
-const Footer = () => {
+
+const Footer= () => {
+  
+
   const { showLogoutButton, logout, user } = useAuth();
+  const { SetShowFilterModal } = useServiceOrder()
   const router = useRouter();
 
   return (
@@ -13,6 +20,7 @@ const Footer = () => {
       <FooterBase>
         {user && (
           <>
+            <button className="ButtonFilter" onClick={()=>{router.push("/")}}>🏠</button>
             <button
               className="ButtonAddOrder"
               onClick={() => {
@@ -21,7 +29,7 @@ const Footer = () => {
             >
               +
             </button>
-            <button className="ButtonFilter">🔍</button>
+            <button className="ButtonFilter" onClick={SetShowFilterModal}>🔍</button>
           </>
         )}
 

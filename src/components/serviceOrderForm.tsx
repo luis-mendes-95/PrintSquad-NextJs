@@ -46,14 +46,12 @@ const ServiceOrderForm = () => {
 
     const result = await createServiceOrder(formData);
 
-    console.log(result);
-
     if (result.success) {
       const serviceOrderId = result.serviceOrderId;
 
       if (files.length === 0) {
         // toast.success("Ordem de serviço criada com sucesso!");
-        router.push("/");
+        router.push(`/${result.serviceOrderId}`)
         return;
       }
 
@@ -76,7 +74,6 @@ const ServiceOrderForm = () => {
 
             if (data.status === true) {
               const downloadUrl = data.data.file.url.full;
-              console.log("Link de download:", downloadUrl);
               downloadLinks.push(downloadUrl);
               uploadSuccess = true;
             } else {
@@ -116,7 +113,7 @@ const ServiceOrderForm = () => {
 
         if (response.status === 200) {
           toast.success("Todos os arquivos enviados e a requisição foi feita com sucesso!");
-          router.push("/");
+          router.push(`/${result.serviceOrderId}`)
         } else {
           toast.error("Ocorreu um erro ao fazer a requisição.");
         }
@@ -127,6 +124,8 @@ const ServiceOrderForm = () => {
 
       setUploading(false);
     }
+
+
   };
 
   return (
