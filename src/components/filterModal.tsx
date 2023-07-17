@@ -9,8 +9,9 @@ interface iCardServiceOrderProps {
 }
 
 const FilterModal = () => {
-  const { SetShowFilterModal, SetShowCards, showCards, serviceOrders } =
-    useServiceOrder();
+  const { SetShowFilterModal, SetShowCards, showCards, serviceOrders } =    useServiceOrder();
+
+  console.log(serviceOrders)
 
   const allLength: number = serviceOrders.filter((os: any) => {
     if(os.status !== "ARQUIVADA" && os.status !== "CONCLUÍDA"){

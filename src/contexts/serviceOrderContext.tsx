@@ -93,6 +93,7 @@ const ServiceOrderProvider = ({ children }: Props) => {
 
   const SetShowFilterModal = () => {
     setShowFilterModal((prevState) => !prevState);
+    getAllServiceOrders();
     router.push("/");
   };
 
