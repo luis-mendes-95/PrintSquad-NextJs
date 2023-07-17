@@ -8,6 +8,10 @@ export const DivHomeBase = styled.div`
   justify-content: space-between;
   align-items: space-between;
 
+  main{
+    min-height: 100vh;
+  }
+
   .serviceOrderCards{
     padding: 80px 0 80px 0;
 

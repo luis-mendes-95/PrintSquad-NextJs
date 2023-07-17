@@ -35,7 +35,7 @@ const Home: NextPage<HomeProps> = ({ serviceOrders }) => {
       <Header />
       <main>
         {user ? (
-          <ul className="serviceOrderCards">
+          <ul className="serviceOrderCards" style={{minHeight:"100%"}}>
             {serviceOrders.length === 0 && (
               <div className="divNoOrders">Você não possui nenhuma ordem de serviço</div>
             )}
