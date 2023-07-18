@@ -16,10 +16,6 @@ const AddOrChangeMockupFormModal = ({ serviceOrder }: iCardServiceOrderProps) =>
   const [uploading, setUploading] = useState(false);
   const router = useRouter();
 
-  const cloudinaryCloudName = "dwadq5lzp";
-  const cloudinaryApiKey = "755525219162782";
-  const cloudinaryApiSecret = "iV-3ALthJ8nJ7ruV7chuiBb7Y28";
-
   const onFileInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFile = event.target.files?.[0] || null;
     if (selectedFile) {
@@ -32,23 +28,13 @@ const AddOrChangeMockupFormModal = ({ serviceOrder }: iCardServiceOrderProps) =>
 
     try {
       const formData = new FormData();
-      formData.append("file", file);
-      formData.append("upload_preset", "ml_default");
+      formData.append("mockup", file);
 
-      const response = await axios.post(
-        `https://api.cloudinary.com/v1_1/${cloudinaryCloudName}/image/upload`,
-        formData,
-        {
-          auth: {
-            username: cloudinaryApiKey,
-            password: cloudinaryApiSecret,
-          },
-        }
-      );
+      const response = await api.patch(`/serviceOrders/upload/${serviceOrder.id}`, formData);
 
-      if (response.status === 200 && response.data.secure_url) {
-        const mockupUrl = response.data.secure_url;
-        toast.success("Mockup adicionado com sucesso!", {autoClose:1000});
+      if (response.status === 200 && response.data.mockupImg) {
+        const mockupUrl = response.data.mockupImg;
+        toast.success("Mockup adicionado com sucesso!", { autoClose: 1000 });
 
         const requestBody = {
           client: serviceOrder.client,
@@ -61,7 +47,7 @@ const AddOrChangeMockupFormModal = ({ serviceOrder }: iCardServiceOrderProps) =>
         try {
           await api.patch(requestUrl, requestBody);
           SetShowMockupModal();
-          getAllServiceOrders()
+          getAllServiceOrders();
           router.push(`/${serviceOrder.id}`);
         } catch (error) {
           console.error("Erro ao atualizar a serviceOrder:", error);
