@@ -1,4 +1,3 @@
-import Toast from "@/components/toast";
 import { LoggedInUser, LoginData, UserData } from "@/schemas/user.schema";
 import api from "@/services/api";
 import { useRouter } from "next/router";

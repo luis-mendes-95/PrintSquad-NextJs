@@ -1,12 +1,5 @@
 import { useServiceOrder } from "@/contexts/serviceOrderContext";
 import Modal from "./modal";
-import { serviceOrderData } from "@/schemas/serviceOrder.schema";
-import { NextPage } from "next";
-import { useEffect } from "react";
-
-interface iCardServiceOrderProps {
-  serviceOrder: serviceOrderData;
-}
 
 const FilterModal = () => {
   const { SetShowFilterModal, SetShowCards, showCards, serviceOrders } =    useServiceOrder();

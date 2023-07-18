@@ -1,10 +1,9 @@
 
-import { GetServerSideProps, NextPage } from "next";
+import { NextPage } from "next";
 import Header from "@/components/header";
 import Footer from "@/components/footer";
 import { DivAboutBase } from "../styles/about";
 import { GoogleFonts } from "next-google-fonts";
-import styled from "styled-components";
 import Image from "next/image";
 
 const AboutPage: NextPage = () => {

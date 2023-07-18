@@ -1,9 +1,8 @@
 import {  Dispatch,  ReactNode,  SetStateAction,  createContext,  useContext,  useEffect,  useState,} from "react";
 import { useRouter } from "next/router";
 import api from "@/services/api";
-import {  serviceOrderData,  serviceOrderRequest,} from "@/schemas/serviceOrder.schema";
+import { serviceOrderRequest } from "@/schemas/serviceOrder.schema";
 import { parseCookies } from "nookies";
-import Toast from "@/components/toast";
 import { toast } from "react-toastify";
 
 interface Props {
