@@ -1,15 +1,11 @@
 import { useAuth } from "@/contexts/authContext";
 import { useServiceOrder } from "@/contexts/serviceOrderContext";
-import { serviceOrderData } from "@/schemas/serviceOrder.schema";
 import { FooterBase } from "@/styles/footer";
-import { NextPage } from "next";
 import { GoogleFonts } from "next-google-fonts";
 import { useRouter } from "next/router";
 
-
 const Footer= () => {
   
-
   const { showLogoutButton, logout, user } = useAuth();
   const { SetShowFilterModal } = useServiceOrder()
   const router = useRouter();

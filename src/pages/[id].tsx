@@ -3,14 +3,11 @@ import Header from "@/components/header";
 import { serviceOrderData } from "@/schemas/serviceOrder.schema";
 import api from "@/services/api";
 import {
-  GetServerSideProps,
   GetStaticPaths,
   GetStaticProps,
   NextPage,
 } from "next";
-import Image from "next/image";
 import { useRouter } from "next/router";
-import nookies from "nookies";
 import { ServiceOrderPageBase } from "../styles/serviceOrderPage";
 import CardServiceOrder from "@/components/card";
 import CardPage from "@/components/cardPage";

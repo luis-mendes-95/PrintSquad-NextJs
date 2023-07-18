@@ -1,6 +1,5 @@
 import { serviceOrderData } from "@/schemas/serviceOrder.schema";
 import Image from "next/image";
-import Link from "next/link";
 import { CardBase } from "../styles/card";
 import { GoogleFonts } from "next-google-fonts";
 import { useRouter } from "next/router";

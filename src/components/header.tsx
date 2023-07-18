@@ -1,9 +1,7 @@
 import { useRouter } from "next/router";
 import { HeaderBase, StyledImage } from "../styles/header";
 import { GoogleFonts } from "next-google-fonts";
-import { useContext } from "react";
 import { useAuth } from "@/contexts/authContext";
-import Image from "next/image";
 import logo from "../assets/Logo Prata PNG Fundo Transparente.png"
 
 const Header = () => {
