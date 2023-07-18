@@ -2,11 +2,7 @@ import Footer from "@/components/footer";
 import Header from "@/components/header";
 import { serviceOrderData } from "@/schemas/serviceOrder.schema";
 import api from "@/services/api";
-import {
-  GetStaticPaths,
-  GetStaticProps,
-  NextPage,
-} from "next";
+import { GetServerSideProps, NextPage } from "next";
 import { useRouter } from "next/router";
 import { ServiceOrderPageBase } from "../styles/serviceOrderPage";
 import CardServiceOrder from "@/components/card";
@@ -24,8 +20,9 @@ interface ServiceOrderProps {
   serviceOrder: serviceOrderData;
 }
 
-const ServiceOrder: NextPage<ServiceOrderProps> = ({  serviceOrder,}: ServiceOrderProps) => {
-
+const ServiceOrder: NextPage<ServiceOrderProps> = ({
+  serviceOrder,
+}: ServiceOrderProps) => {
   const router = useRouter();
 
   const {
@@ -43,7 +40,7 @@ const ServiceOrder: NextPage<ServiceOrderProps> = ({  serviceOrder,}: ServiceOrd
     finnishOrder,
     sentToArchive,
     SetServiceOrders,
-    serviceOrders
+    serviceOrders,
   } = useServiceOrder();
 
   const handleAuthorizePrinting = () => {
@@ -121,7 +118,6 @@ const ServiceOrder: NextPage<ServiceOrderProps> = ({  serviceOrder,}: ServiceOrd
               ENVIADOS PARA IMPRESSÃO
             </button>
           )}
-          
 
           {serviceOrder.status === "AGUARDANDO CLIENTE" && (
             <button
@@ -163,7 +159,7 @@ const ServiceOrder: NextPage<ServiceOrderProps> = ({  serviceOrder,}: ServiceOrd
           )}
         </ul>
       </main>
-      <Footer/>
+      <Footer />
       {showAddInstrunctionModal && (
         <AddInstructionFormModal serviceOrder={serviceOrder} />
       )}
@@ -204,37 +200,29 @@ const ServiceOrder: NextPage<ServiceOrderProps> = ({  serviceOrder,}: ServiceOrd
   );
 };
 
-export const getStaticPaths: GetStaticPaths = async () => {
-  try {
-    // Faça uma chamada à API para obter a lista de IDs disponíveis
-    const response = await api.get("/serviceOrders");
-
-    // Mapeie os dados para obter um array de objetos contendo os parâmetros dos caminhos
-    const paths = response.data.map((order: serviceOrderData) => ({
-      params: { id: order.id },
-    }));
-
-    return {
-      paths,
-      fallback: "blocking",
-    };
-  } catch (error) {
-    console.error("Erro ao obter os caminhos estáticos:", error);
-    return {
-      paths: [],
-      fallback: "blocking",
-    };
-  }
-};
-
-export const getStaticProps: GetStaticProps<ServiceOrderProps> = async (  ctx  ) => {
-
+export const getServerSideProps: GetServerSideProps<ServiceOrderProps> = async (
+  ctx
+) => {
   const id = ctx.params!.id;
 
-  const response = await api.get<serviceOrderData>(`/serviceOrders/${id}`);
+  try {
+    const response = await api.get<serviceOrderData>(
+      `/serviceOrders/${id}`
+    );
+    const serviceOrder = response.data;
 
-  return { props: { serviceOrder: response.data }, revalidate: 60 };
+    return {
+      props: {
+        serviceOrder,
+      },
+    };
+  } catch (error) {
+    console.error("Erro ao obter a ordem de serviço:", error);
 
+    return {
+      notFound: true,
+    };
+  }
 };
 
 export default ServiceOrder;
