@@ -80,12 +80,12 @@ const ServiceOrder: NextPage<ServiceOrderProps> = ({
       <Header />
       <main>
         <ul className="serviceOrderCards">
-          <li key={serviceOrder.id} className="liCardServiceOrder">
+          <li key={`card-${serviceOrder.id}`} className="liCardServiceOrder">
             <CardPage serviceOrder={serviceOrder} />
           </li>
 
           <li
-            key={serviceOrder.id}
+            key={`dashboard-${serviceOrder.id}`}
             className="liDashServiceOrder"
             style={{ maxWidth: "93%", minWidth: "42%" }}
           >
@@ -93,7 +93,7 @@ const ServiceOrder: NextPage<ServiceOrderProps> = ({
           </li>
 
           <li
-            key={serviceOrder.id}
+            key={`files-${serviceOrder.id}`}
             className="liDashServiceOrderFiles"
             style={{ maxWidth: "100%", minWidth: "30%" }}
           >
