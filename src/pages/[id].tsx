@@ -114,7 +114,7 @@ const ServiceOrder: NextPage<ServiceOrderProps> = ({
             <button
               className="ButtonAuthorize"
               onClick={handleSentToPrinting}
-              style={{ backgroundColor: "brown", fontSize:"25pt"}}
+              style={{ backgroundColor: "brown", fontSize:"15pt", height: "50px"}}
               
             >
               ENVIADOS PARA IMPRESSÃO
@@ -125,6 +125,7 @@ const ServiceOrder: NextPage<ServiceOrderProps> = ({
             <button
               className="ButtonAuthorize"
               onClick={handleAuthorizePrinting}
+              style={{fontSize:"25pt"}}
             >
               AUTORIZAR IMPRESSÃO
             </button>
@@ -134,7 +135,7 @@ const ServiceOrder: NextPage<ServiceOrderProps> = ({
             <button
               className="ButtonAuthorize"
               onClick={handleSentToPrinting}
-              style={{ backgroundColor: "brown" }}
+              style={{ backgroundColor: "brown", height: "75px" }}
             >
               ENVIADOS PARA IMPRESSÃO
             </button>

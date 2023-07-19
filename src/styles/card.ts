@@ -265,7 +265,6 @@ export const DashServiceOrder = styled.div`
   box-shadow: inset 0 0 20px rgba(0, 0, 0, 1);
   background-color: white;
   min-width: 45%;
-  height: 400px;
   display: flex;
   flex-direction: column;
   justify-content: space-around;
@@ -365,7 +364,7 @@ export const DashServiceOrder = styled.div`
     width: 100%;
     margin-top: 10px;
     padding: 15px 10px;
-    height: 300px;
+    height: 500px;
     border: none;
     border-radius: 8px;
     box-shadow: 1pt 1pt 5pt black;
@@ -516,7 +515,6 @@ export const DashServiceOrderFiles = styled.div`
     flex-direction: column;
     gap: 15px;
     width: 100%;
-
     max-height: 250px;
     padding: 15px 10px;
     border: none;

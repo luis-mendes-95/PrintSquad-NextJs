@@ -7,7 +7,7 @@ export const ServiceOrderPageBase = styled.div`
   justify-content: space-between;
   align-items: space-between;
   min-height: 100vh;
-  padding: 0 0 200px 0;
+  padding: 0 0 90px 0;
 
   .serviceOrderCards {
     padding: 20px 0 20px 0;
@@ -89,9 +89,6 @@ export const ServiceOrderPageBase = styled.div`
     }
 
     .liCardServiceOrder {
-      @media (min-width: 380px) {
-        width: 65%;
-      }
 
       @media (min-width: 600px) {
         width: 45%;
@@ -130,12 +127,12 @@ export const ServiceOrderPageBase = styled.div`
     padding: 5px;
     margin: 5px 0;
     width: 80%;
-    max-height: 100%;
+
     font-weight: bolder;
     border-radius: 8px;
     text-shadow: 1pt 1pt 3pt black;
     box-shadow: 1pt 1pt 3pt black;
-    height: 50px;
+
 
     @media(min-width: 700px) {
       width: 30%;

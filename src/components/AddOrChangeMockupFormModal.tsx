@@ -66,9 +66,9 @@ const AddOrChangeMockupFormModal = ({ serviceOrder }: iCardServiceOrderProps) =>
 
   return (
     <Modal>
-      <h2>Adicionar ou Alterar Mockup</h2>
-      <input type="file" onChange={onFileInputChange} />
-      <div>
+      <h2 style={{textAlign:"center", fontFamily:"sans-serif"}}>Adicionar ou Alterar Mockup</h2>
+      <input style={{width:"45%", display:"flex", margin:"50px 0 0 85px", backgroundColor:"orange"}} type="file" onChange={onFileInputChange} />
+      <div style={{margin:"50px 0 0 0"}}>
         <button onClick={SetShowMockupModal} className="buttonCancel">
           Voltar
         </button>
