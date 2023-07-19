@@ -87,7 +87,7 @@ const ServiceOrder: NextPage<ServiceOrderProps> = ({
           <li
             key={`dashboard-${serviceOrder.id}`}
             className="liDashServiceOrder"
-            style={{ maxWidth: "93%", minWidth: "42%" }}
+            style={{ width: "95%"}}
           >
             <ServiceOrderDashboard serviceOrder={serviceOrder} />
           </li>
@@ -95,7 +95,7 @@ const ServiceOrder: NextPage<ServiceOrderProps> = ({
           <li
             key={`files-${serviceOrder.id}`}
             className="liDashServiceOrderFiles"
-            style={{ maxWidth: "100%", minWidth: "30%" }}
+            style={{ width: "95%"}}
           >
             <ServiceOrderDashFiles serviceOrder={serviceOrder} />
           </li>
@@ -104,6 +104,7 @@ const ServiceOrder: NextPage<ServiceOrderProps> = ({
             <button
               className="ButtonSendUpdateMockup"
               onClick={SetShowMockupModal}
+              style={{fontSize:"15pt"}}
             >
               ENVIAR / SUBSTITUIR MOCKUP
             </button>
@@ -113,7 +114,8 @@ const ServiceOrder: NextPage<ServiceOrderProps> = ({
             <button
               className="ButtonAuthorize"
               onClick={handleSentToPrinting}
-              style={{ backgroundColor: "brown" }}
+              style={{ backgroundColor: "brown", fontSize:"25pt"}}
+              
             >
               ENVIADOS PARA IMPRESSÃO
             </button>

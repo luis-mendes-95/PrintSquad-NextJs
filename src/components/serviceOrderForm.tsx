@@ -59,42 +59,21 @@ const ServiceOrderForm = () => {
 
       const downloadLinks: string[] = [];
 
-      for (let i = 0; i < files.length; i++) {
-        const file = files[i];
-        const fileFormData = new FormData();
-        fileFormData.append("file", file);
+      const formDataFiles = new FormData();
+      files.forEach((file: any) => {
+        formDataFiles.append("files", file);
+      });
 
-        let uploadSuccess = false;
-        let attempts = 0;
+      const response = await api.post("serviceOrders/upload", formDataFiles, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
 
-        while (!uploadSuccess && attempts < 3) {
-          try {
-            const response = await api.post("https://api.anonfiles.com/upload", fileFormData);
-            const data = response.data;
+      //TALVEZ DAQUI PRA BAIXO
 
-            if (data.status === true) {
-              const downloadUrl = data.data.file.url.full;
-              downloadLinks.push(downloadUrl);
-              uploadSuccess = true;
-            } else {
-              console.error("Erro ao enviar o arquivo:", data.error.message);
-            }
-          } catch (error) {
-            console.error("Erro ao enviar o arquivo:", error);
-          }
-
-          attempts++;
-        }
-
-        if (uploadSuccess) {
-          // Exibir a contagem do arquivo enviado
-          toast.success(`Arquivo ${i + 1} de ${files.length} enviado!`);
-        } else {
-          toast.error(`Falha ao enviar o arquivo ${i + 1}. Tentativas esgotadas.`);
-        }
-      }
-
-      const filesString = downloadLinks.join("                        "); // Espaços de caracteres para separar os links
+      console.log(response.data)
+      const filesString = response.data.join("                        "); // Espaços de caracteres para separar os links
 
       const requestBody = {
         client: formData.client,
@@ -135,36 +114,38 @@ const ServiceOrderForm = () => {
         <label>Data:</label>
         <input type="text" value={date} disabled />
 
-        <label>Cliente:</label>
+        <label style={{fontSize:"25pt"}}>Cliente:</label>
         <input type="text" {...register("client")} placeholder="Digite o nome do cliente" />
 
-        <label>Produto:</label>
+        <label style={{fontSize:"25pt"}}>Produto:</label>
         <select {...register("product")}>
           <option value="">Selecione o produto</option>
-          <option value="CAMISETA BASICA MANGA CURTA">CAMISETA BASICA MANGA CURTA</option>
+          <option value="BANDEIRA QUADRADA">BANDEIRA QUADRADA</option>
           <option value="CAMISETA BASICA MANGA COMPRIDA">CAMISETA BASICA MANGA COMPRIDA</option>
-          <option value="CAMISETA BASICA MANGA CURTA">CAMISETA POLO MANGA CURTA</option>
-          <option value="CAMISETA BASICA MANGA COMPRIDA">CAMISETA POLO MANGA COMPRIDA</option>
-          <option value="CAMISETA RAGLAN MANGA CURTA">CAMISETA RAGLAN MANGA CURTA</option>
+          <option value="CAMISETA BASICA MANGA CURTA">CAMISETA BASICA MANGA CURTA</option>
+          <option value="CAMISETA POLO MANGA COMPRIDA">CAMISETA POLO MANGA COMPRIDA</option>
+          <option value="CAMISETA POLO MANGA CURTA">CAMISETA POLO MANGA CURTA</option>
           <option value="CAMISETA RAGLAN MANGA COMPRIDA">CAMISETA RAGLAN MANGA COMPRIDA</option>
+          <option value="CAMISETA RAGLAN MANGA CURTA">CAMISETA RAGLAN MANGA CURTA</option>
           <option value="CAMISETA REGATA">CAMISETA REGATA</option>
           <option value="CORTA VENTO RAGLAN">CORTA VENTO RAGLAN</option>
           <option value="WINDBANNER 1,5M">WINDBANNER 1,5M</option>
           <option value="WINDBANNER 2,5M">WINDBANNER 2,5M</option>
           <option value="WINDBANNER 3,2M">WINDBANNER 3,2M</option>
+
         </select>
 
-        <label>Tipo de Arte:</label>
+        <label style={{fontSize:"25pt"}}>Tipo de Arte:</label>
         <select {...register("printType")}>
           <option value="">Selecione o tipo de arte</option>
           <option value="ARTE NOVA">ARTE NOVA</option>
           <option value="REIMPRESSÃO">REIMPRESSÃO</option>
         </select>
 
-        <label>Instrução:</label>
+        <label style={{fontSize:"25pt"}}>Instrução:</label>
         <textarea placeholder="Digite aqui informações para que a arte seja feita" {...register("description")} />
 
-        <label>Arquivos para arte:</label>
+        <label style={{fontSize:"25pt"}}>Arquivos para arte:</label>
         <input
           type="file"
           multiple

@@ -16,8 +16,9 @@ const Footer= () => {
       <FooterBase>
         {user && (
           <>
-            <button className="ButtonFilter" onClick={()=>{router.push("/")}}>🏠</button>
+            <button className="ButtonFilter" onClick={()=>{router.push("/")}} style={{fontSize:"25pt", width:"60px", height:"60px"}}>🏠</button>
             <button
+            style={{fontSize:"25pt", width:"60px", height:"60px"}}
               className="ButtonAddOrder"
               onClick={() => {
                 router.push("/addServiceOrderPage");
@@ -25,7 +26,7 @@ const Footer= () => {
             >
               +
             </button>
-            <button className="ButtonFilter" onClick={SetShowFilterModal}>🔍</button>
+            <button className="ButtonFilter" onClick={SetShowFilterModal} style={{fontSize:"25pt", width:"60px", height:"60px"}}>🔍</button>
           </>
         )}
 

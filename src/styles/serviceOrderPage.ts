@@ -7,6 +7,7 @@ export const ServiceOrderPageBase = styled.div`
   justify-content: space-between;
   align-items: space-between;
   min-height: 100vh;
+  padding: 0 0 200px 0;
 
   .serviceOrderCards {
     padding: 20px 0 20px 0;

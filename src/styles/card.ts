@@ -420,6 +420,10 @@ export const DashServiceOrderFiles = styled.div`
   align-items: center;
   text-align: center;
 
+      h2{
+      font-size: 30pt;
+    }
+
   @media (min-width: 768px) {
     min-width: 25%;
     padding: 5px 10px;
@@ -439,6 +443,7 @@ export const DashServiceOrderFiles = styled.div`
     text-shadow: 1pt 1pt 1pt black;
     box-shadow: 1pt 1pt 3pt black;
     height: 50px;
+    font-size: 20pt;
   }
 
   .noImage {
@@ -463,6 +468,7 @@ export const DashServiceOrderFiles = styled.div`
     @media (min-width: 768px) {
       height: 50px;
     }
+
 
     h3 {
       color: black;
