@@ -201,6 +201,7 @@ const ServiceOrderForm = () => {
           type="submit"
           className="buttonCreateOrder"
           disabled={uploading}
+          style={{fontSize:"25pt"}}
         >
           Criar
         </button>
