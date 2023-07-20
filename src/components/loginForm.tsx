@@ -2,6 +2,7 @@ import { LoginData, loginSchema } from "@/schemas/user.schema";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useAuth } from "@/contexts/authContext";
+import { useState } from "react";
 
 const LoginForm = () => {
   const { register, handleSubmit } = useForm<LoginData>({
@@ -9,9 +10,15 @@ const LoginForm = () => {
   });
 
   const { login } = useAuth();
+  const [loading, setLoading] = useState(false);
 
   const onFormSubmit = async (formData: LoginData) => {
+    setLoading(true);
     login(formData);
+    setTimeout(() => {
+      setLoading(false);
+    }, 2000);
+
   };
 
   return (
@@ -39,7 +46,7 @@ const LoginForm = () => {
           </div>
         </div>
         <div>
-          <button type="submit">Entrar</button>
+          <button type="submit" disabled={loading}>Entrar</button>
         </div>
 
         {/* <Link href="/register">Não é cadastrado ainda? Clique aqui</Link> */}
