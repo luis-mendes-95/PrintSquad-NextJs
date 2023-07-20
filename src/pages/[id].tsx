@@ -155,7 +155,7 @@ const ServiceOrder: NextPage<ServiceOrderProps> = ({
             <button
               className="ButtonAuthorize"
               onClick={handleArchive}
-              style={{ backgroundColor: "brown" }}
+              style={{ backgroundColor: "brown", height: "75px", fontSize:"20pt" }}
             >
               ARQUIVAR
             </button>
