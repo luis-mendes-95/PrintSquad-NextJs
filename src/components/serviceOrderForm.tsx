@@ -17,6 +17,7 @@ interface ServiceOrderFormData {
 const ServiceOrderForm = () => {
   const [files, setFiles] = useState<File[]>([]);
   const [uploading, setUploading] = useState(false);
+  const [loading, setLoading] = useState(false);
   const { register, handleSubmit } = useForm<any>();
   const { createServiceOrder } = useServiceOrder();
   const router = useRouter();
@@ -35,6 +36,9 @@ const ServiceOrderForm = () => {
   const date = getDate();
 
   const onFormSubmit = async (formData: any) => {
+    
+    setLoading(true);
+
     formData.date = date;
     formData.status = "AGUARDANDO ARTE";
     formData.cost = "R$ 0,00";
@@ -104,6 +108,7 @@ const ServiceOrderForm = () => {
       }
 
       setUploading(false);
+      setLoading(false);
     }
   };
 
@@ -200,7 +205,7 @@ const ServiceOrderForm = () => {
         <button
           type="submit"
           className="buttonCreateOrder"
-          disabled={uploading}
+          disabled={loading}
           style={{fontSize:"25pt"}}
         >
           Criar
