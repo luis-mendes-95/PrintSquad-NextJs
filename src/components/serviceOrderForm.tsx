@@ -42,7 +42,7 @@ const ServiceOrderForm = () => {
     formData.margin = "R$ 0,00";
     formData.files = null;
     formData.mockupImg = null;
-    formData.description = formData.description + "|||"
+    formData.description = formData.description + "|||";
 
     const result = await createServiceOrder(formData);
 
@@ -51,7 +51,7 @@ const ServiceOrderForm = () => {
 
       if (files.length === 0) {
         // toast.success("Ordem de serviço criada com sucesso!");
-        router.push(`/${result.serviceOrderId}`)
+        router.push(`/${result.serviceOrderId}`);
         return;
       }
 
@@ -72,7 +72,7 @@ const ServiceOrderForm = () => {
 
       //TALVEZ DAQUI PRA BAIXO
 
-      console.log(response.data)
+      console.log(response.data);
       const filesString = response.data.join("                        "); // Espaços de caracteres para separar os links
 
       const requestBody = {
@@ -91,8 +91,10 @@ const ServiceOrderForm = () => {
         });
 
         if (response.status === 200) {
-          toast.success("Todos os arquivos enviados e a requisição foi feita com sucesso!");
-          router.push(`/${result.serviceOrderId}`)
+          toast.success(
+            "Todos os arquivos enviados e a requisição foi feita com sucesso!"
+          );
+          router.push(`/${result.serviceOrderId}`);
         } else {
           toast.error("Ocorreu um erro ao fazer a requisição.");
         }
@@ -103,8 +105,6 @@ const ServiceOrderForm = () => {
 
       setUploading(false);
     }
-
-
   };
 
   return (
@@ -114,56 +114,95 @@ const ServiceOrderForm = () => {
         <label>Data:</label>
         <input type="text" value={date} disabled />
 
-        <label style={{fontSize:"25pt"}}>Cliente:</label>
-        <input type="text" {...register("client")} placeholder="Digite o nome do cliente" />
+        <label style={{ fontSize: "25pt" }}>Cliente:</label>
+        <input
+          type="text"
+          {...register("client")}
+          placeholder="Digite o nome do cliente"
+        />
 
-        <label style={{fontSize:"25pt"}}>Produto:</label>
+        <label style={{ fontSize: "25pt" }}>Produto:</label>
         <select {...register("product")}>
           <option value="">Selecione o produto</option>
           <option value="BANDEIRA QUADRADA">BANDEIRA QUADRADA</option>
-          <option value="CAMISETA BASICA MANGA COMPRIDA">CAMISETA BASICA MANGA COMPRIDA</option>
-          <option value="CAMISETA BASICA MANGA CURTA">CAMISETA BASICA MANGA CURTA</option>
-          <option value="CAMISETA POLO MANGA COMPRIDA">CAMISETA POLO MANGA COMPRIDA</option>
-          <option value="CAMISETA POLO MANGA CURTA">CAMISETA POLO MANGA CURTA</option>
-          <option value="CAMISETA RAGLAN MANGA COMPRIDA">CAMISETA RAGLAN MANGA COMPRIDA</option>
-          <option value="CAMISETA RAGLAN MANGA CURTA">CAMISETA RAGLAN MANGA CURTA</option>
+          <option value="CAMISETA BASICA MANGA COMPRIDA">
+            CAMISETA BASICA MANGA COMPRIDA
+          </option>
+          <option value="CAMISETA BASICA MANGA CURTA">
+            CAMISETA BASICA MANGA CURTA
+          </option>
+          <option value="CAMISETA POLO MANGA COMPRIDA">
+            CAMISETA POLO MANGA COMPRIDA
+          </option>
+          <option value="CAMISETA POLO MANGA CURTA">
+            CAMISETA POLO MANGA CURTA
+          </option>
+          <option value="CAMISETA RAGLAN MANGA COMPRIDA">
+            CAMISETA RAGLAN MANGA COMPRIDA
+          </option>
+          <option value="CAMISETA RAGLAN MANGA CURTA">
+            CAMISETA RAGLAN MANGA CURTA
+          </option>
           <option value="CAMISETA REGATA">CAMISETA REGATA</option>
           <option value="CORTA VENTO RAGLAN">CORTA VENTO RAGLAN</option>
           <option value="WINDBANNER 1,5M">WINDBANNER 1,5M</option>
           <option value="WINDBANNER 2,5M">WINDBANNER 2,5M</option>
           <option value="WINDBANNER 3,2M">WINDBANNER 3,2M</option>
-
         </select>
 
-        <label style={{fontSize:"25pt"}}>Tipo de Arte:</label>
+        <label style={{ fontSize: "25pt" }}>Tipo de Arte:</label>
         <select {...register("printType")}>
           <option value="">Selecione o tipo de arte</option>
           <option value="ARTE NOVA">ARTE NOVA</option>
           <option value="REIMPRESSÃO">REIMPRESSÃO</option>
         </select>
 
-        <label style={{fontSize:"25pt"}}>Instrução:</label>
-        <textarea placeholder="Digite aqui informações para que a arte seja feita" {...register("description")} />
-
-        <label style={{fontSize:"25pt"}}>Arquivos para arte:</label>
-        <input
-          type="file"
-          multiple
-          onChange={(event: any) => {
-            const newFiles = Array.from(event.target.files) as File[];
-            setFiles((prevState) => [...prevState, ...newFiles]);
-          }}
+        <label style={{ fontSize: "25pt" }}>Instrução:</label>
+        <textarea
+          placeholder="Digite aqui informações para que a arte seja feita"
+          {...register("description")}
         />
 
-        <button type="submit" className="buttonCreateOrder" disabled={uploading}>
-          {uploading ? (
-            <>
-              Enviando arquivos... Aguarde... Pode levar alguns minutos...
-              <img src="https://media.giphy.com/media/r3xBH1FXWz0h55CVtj/giphy.gif" alt="Loading" style={{ width: "25%" , borderRadius: "50%"}} />
-            </>
-          ) : (
-            "Criar"
-          )}
+        {!uploading && (
+          <>
+            <label style={{ fontSize: "25pt" }}>Arquivos para arte:</label>
+            <input
+              style={{
+                margin: "20px 0",
+                fontWeight: "bold",
+                backgroundColor: "lightgray",
+                borderRadius: "18px",
+                boxShadow: "2pt 2pt 5pt black",
+                padding: "40px 10px 60px",
+              }}
+              type="file"
+              multiple
+              onChange={(event: any) => {
+                const newFiles = Array.from(event.target.files) as File[];
+                setFiles((prevState) => [...prevState, ...newFiles]);
+              }}
+            />
+          </>
+        )}
+
+        {
+          uploading &&
+          <>
+          <p style={{width:"100%", textAlign:"center", fontWeight:"bold", fontFamily:"sans-serif", fontSize:"15pt"}}>Aguarde os arquivos serem enviados.</p>
+          <img
+            src="https://media.giphy.com/media/r3xBH1FXWz0h55CVtj/giphy.gif"
+            alt="Loading"
+            style={{ margin:"-80px 0 0 0", width: "100%", borderRadius: "90%", transform:"scale(0.5)" }}
+          />
+    </>
+        }
+
+        <button
+          type="submit"
+          className="buttonCreateOrder"
+          disabled={uploading}
+        >
+          Criar
         </button>
       </form>
     </CreateServiceOrderFormBase>

@@ -364,7 +364,7 @@ export const DashServiceOrder = styled.div`
     width: 100%;
     margin-top: 10px;
     padding: 15px 10px;
-    height: 500px;
+    max-height: 500px;
     border: none;
     border-radius: 8px;
     box-shadow: 1pt 1pt 5pt black;
@@ -512,16 +512,17 @@ export const DashServiceOrderFiles = styled.div`
 
   .divServiceOrderInstructions {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     gap: 15px;
     width: 100%;
     max-height: 250px;
     padding: 15px 10px;
+    flex-wrap: wrap;
     border: none;
     border-radius: 8px;
     box-shadow: 1pt 1pt 5pt black;
-    justify-content: flex-start;
-    align-items: space-around;
+    justify-content: space-around;
+    align-items: space-between;
     overflow-y: scroll;
 
     p {

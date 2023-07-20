@@ -145,7 +145,7 @@ const ServiceOrder: NextPage<ServiceOrderProps> = ({
             <button
               className="ButtonAuthorize"
               onClick={handleFinnish}
-              style={{ backgroundColor: "green" }}
+              style={{ backgroundColor: "green", height: "75px", fontSize:"20pt" }}
             >
               CONCLUIR PRODUÇÃO
             </button>
@@ -190,10 +190,9 @@ const ServiceOrder: NextPage<ServiceOrderProps> = ({
           </div>
           <img
             src={serviceOrder.mockupImg}
-            style={{
-              width: "100%",
-              transform: "scale(1.3)",
-              margin: "30px 0 0 0",
+            style={{width: "100%",
+              margin: "30px 0px 0px",
+              maxHeight: "70%",
             }}
           />
         </Modal>
