@@ -2,7 +2,6 @@ import { useRouter } from "next/router";
 import { HeaderBase, StyledImage } from "../styles/header";
 import { GoogleFonts } from "next-google-fonts";
 import { useAuth } from "@/contexts/authContext";
-import logo from "../assets/Logo Prata PNG Fundo Transparente.png"
 
 const Header = () => {
   const router = useRouter();
@@ -35,7 +34,7 @@ const Header = () => {
           {
 
           user &&
-            <StyledImage src={logo} alt={"userLogo"} onClick={setShowLogout}/>
+            <StyledImage src="https://res.cloudinary.com/dwadq5lzp/image/upload/v1689875084/ehwcx3vqhsgoknhduq0z.png" alt={"userLogo"} onClick={setShowLogout} width={100} height={100}/>
 
           }
 
