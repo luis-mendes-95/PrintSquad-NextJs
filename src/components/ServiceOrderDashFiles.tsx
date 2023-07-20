@@ -17,7 +17,7 @@ const ServiceOrderDashFiles = ({ serviceOrder }: iCardServiceOrderProps) => {
   if (serviceOrder.files === null) {
     return (
       <DashServiceOrderFiles>
-        <h2>ARQUIVOS:</h2>
+        <h2 style={{fontSize:"25pt"}}>ARQUIVOS:</h2>
         <button className="buttonAddFile" onClick={SetShowFileModal}>ADICIONAR + </button>
         <p>Não foram enviados arquivos para este cliente.</p>
       </DashServiceOrderFiles>
@@ -36,7 +36,7 @@ const ServiceOrderDashFiles = ({ serviceOrder }: iCardServiceOrderProps) => {
         <div className="divServiceOrderInstructions">
           {/* Renderiza um link para cada link do array */}
           {links.map((link, index) => (
-            <a href={link.trim()} target="_blank" key={index}>{link.trim()}</a>
+            <a href={link.trim()} target="_blank" key={index} style={{backgroundColor:"orange", textDecoration:"none", color:"white", padding:"5px", borderRadius:"8px", textShadow:"1pt 1pt 3pt black", fontWeight:"bold", fontFamily:"sans-serif"}}>{`Arquivo (${link.trim().slice(-4)})`}</a>
           ))}
         </div>
       </DashServiceOrderFiles>

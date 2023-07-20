@@ -44,8 +44,8 @@ const CardServiceOrder = ({ serviceOrder }: iCardServiceOrderProps) => {
       </div>
 
       <div className="divProductTitle">
-        <h3>PRODUCT:</h3>
-        <p>{serviceOrder.product}</p>
+        <h3>PRODUTO:</h3>
+        <p style={{fontSize:"25pt"}}>{serviceOrder.product}</p>
       </div>
     </CardBase>
   );

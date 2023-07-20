@@ -18,7 +18,7 @@ export const FooterBase = styled.footer`
   text-align: center;
   bottom: 0;
   width: 100vw;
-  height: 60px;
+  height: 90px;
   position: fixed;
   border-top: 2pt solid black;
   border-bottom: 2pt solid black;

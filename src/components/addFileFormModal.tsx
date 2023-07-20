@@ -107,25 +107,31 @@ const AddFileFormModal = ({ serviceOrder }: iCardServiceOrderProps) => {
 
   return (
     <Modal>
-      <h2>Adicionar Arquivos</h2>
-      <input type="file" multiple onChange={onFileInputChange} />
-      <div>
-        <button onClick={SetShowFileModal} className="buttonCancel">
-          Voltar
-        </button>
-        <button className="buttonSave" onClick={onFileFormSubmit} disabled={uploading}>
-          {uploading ? (
-            <>
-              Enviando arquivos... Aguarde... Pode levar alguns minutos...
+      {
+        !uploading &&
+<h2 style={{textAlign:"center", fontFamily:"sans-serif"}}>Adicionar Arquivos</h2>
+      }
+      
+      {!uploading &&
+      <input style={{width: "100%", margin:"50px 0", backgroundColor:"lightgray", padding:"50px 10px", borderRadius:"18px", boxShadow:"1pt 1pt 3pt black"}} type="file" multiple onChange={onFileInputChange} />
+      }
+      {
+        uploading &&
+        <>
+              <p style={{width:"100%", textAlign:"center", fontWeight:"bold", fontSize:"25pt", fontFamily:"sans-serif"}}>Aguarde os arquivos serem enviados.</p>
               <img
                 src="https://media.giphy.com/media/r3xBH1FXWz0h55CVtj/giphy.gif"
                 alt="Loading"
-                style={{ width: "100%", borderRadius: "50%" }}
+                style={{ width: "100%", borderRadius: "90%" , transform:"scale(0.5)"}}
               />
-            </>
-          ) : (
-            "Salvar"
-          )}
+        </>
+      }
+      <div>
+        <button style={{fontSize:"15pt", width:"100%"}} onClick={SetShowFileModal} className="buttonCancel">
+          Voltar
+        </button>
+        <button style={{fontSize:"15pt", width:"100%"}} className="buttonSave" onClick={onFileFormSubmit} disabled={uploading}>
+            Salvar
         </button>
       </div>
 
@@ -134,6 +140,12 @@ const AddFileFormModal = ({ serviceOrder }: iCardServiceOrderProps) => {
           font-size: ${uploading ? "6pt" : "inherit"};
         }
       `}</style>
+
+
+
+
+
+
     </Modal>
   );
 };

@@ -49,7 +49,7 @@ const FilterModal = () => {
   return (
     <Modal>
       <div className="divBackgroundFilter">
-        <h2 style={{ fontSize: "8pt" }}>FILTRAR POR STATUS:</h2>
+        <h2 style={{ fontSize: "18pt", fontFamily:"sans-serif" }}>FILTRAR POR STATUS:</h2>
         <button
           onClick={() => {
             SetShowCards("TODOS");
@@ -60,12 +60,14 @@ const FilterModal = () => {
                   backgroundColor: "green",
                   color: "white",
                   textShadow: "1pt 1pt 2pt black",
+                  fontSize:"15pt",
+                  height: "80px"
                 }
-              : {}
+              : {fontSize:"15pt", height: "80px"}
           }
         >
           {" "}
-          Todos = {allLength}{" "}
+          Todos | {allLength}{" "}
         </button>
         <button
           onClick={() => {
@@ -77,11 +79,14 @@ const FilterModal = () => {
                   backgroundColor: "orange",
                   color: "white",
                   textShadow: "1pt 1pt 2pt black",
+                  fontSize:"15pt",
+                  padding: "5px",
+                  height: "80px"
                 }
-              : {}
+              : {fontSize:"15pt", height: "80px"}
           }
         >
-          Aguardando Arte = {waitingDesigner}
+          Aguardando Arte | {waitingDesigner}
         </button>
         <button
           onClick={() => {
@@ -93,11 +98,13 @@ const FilterModal = () => {
                   backgroundColor: "cyan",
                   color: "white",
                   textShadow: "1pt 1pt 2pt black",
+                  fontSize:"15pt",
+                  height: "80px"
                 }
-              : {}
+              : {height: "80px", fontSize:"15pt",}
           }
         >
-          Aguardando Cliente = {waitingClient}
+          Aguardando Cliente | {waitingClient}
         </button>
         <button
           onClick={() => {
@@ -109,11 +116,13 @@ const FilterModal = () => {
                   backgroundColor: "green",
                   color: "white",
                   textShadow: "1pt 1pt 2pt black",
+                  fontSize:"15pt",
+                  height: "80px"
                 }
-              : {}
+              : {height: "80px", fontSize:"15pt",}
           }
         >
-          Aprovados = {aprooved}
+          Aprovados | {aprooved}
         </button>
         <button
           onClick={() => {
@@ -125,11 +134,13 @@ const FilterModal = () => {
                   backgroundColor: "brown",
                   color: "white",
                   textShadow: "1pt 1pt 2pt black",
+                  fontSize:"15pt",
+                  height: "80px"
                 }
-              : {}
+              : {height: "80px", fontSize:"15pt",}
           }
         >
-          Em produção = {inProduction}
+          Em produção | {inProduction}
         </button>
         <button
           onClick={() => {
@@ -141,11 +152,13 @@ const FilterModal = () => {
                   backgroundColor: "green",
                   color: "white",
                   textShadow: "1pt 1pt 2pt black",
+                  fontSize:"15pt",
+                  height: "80px"
                 }
-              : {}
+              : {height: "80px", fontSize:"15pt",}
           }
         >
-          Concluídos = {finnished}
+          Concluídos | {finnished}
         </button>
         <button
           onClick={() => {
@@ -157,11 +170,13 @@ const FilterModal = () => {
                   backgroundColor: "lightgray",
                   color: "white",
                   textShadow: "1pt 1pt 2pt black",
+                  fontSize:"15pt",
+                  height: "80px"
                 }
-              : {}
+              : {height: "80px", fontSize:"15pt",}
           }
         >
-          Arquivados = {archived}
+          Arquivados | {archived}
         </button>
       </div>
       <div style={{ width: "100%" }}>
@@ -172,6 +187,8 @@ const FilterModal = () => {
             backgroundColor: "red",
             color: "white",
             fontWeight: "bold",
+            fontSize:"20pt",
+            textShadow: "1pt 1pt 3pt black"
           }}
         >
           Fechar Filtro
