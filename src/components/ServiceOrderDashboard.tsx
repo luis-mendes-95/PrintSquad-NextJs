@@ -18,11 +18,11 @@ const ServiceOrderDashboard = ({ serviceOrder }: iCardServiceOrderProps) => {
     <>
       <DashServiceOrder>
         <GoogleFonts href="https://fonts.googleapis.com/css2?family=Anton&family=Fjalla+One&family=Righteous&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Vina+Sans&display=swap" />
-        <h2>INSTRUÇÕES:</h2>
-        <button className="buttonAddInstruction" onClick={SetShowInstructionModal}>ADICIONAR + </button>
+        <h2 style={{fontSize:"30pt"}}>INSTRUÇÕES:</h2>
+        <button style={{fontSize:"20pt"}} className="buttonAddInstruction" onClick={SetShowInstructionModal}>ADICIONAR + </button>
         <div className="divServiceOrderInstructions">
           {descriptionArray.map((description, index) => (
-            <p key={index} className="pDescription">{description}</p>
+            <p key={index} className="pDescription" style={{fontSize:"20pt"}}>{description}</p>
           ))}
         </div>
       </DashServiceOrder>

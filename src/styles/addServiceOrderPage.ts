@@ -98,7 +98,7 @@ export const AddServiceOrderPageBase = styled.div`
 
     .liCardServiceOrder {
       @media (min-width: 380px) {
-        width: 65%;
+        width: 100%;
       }
 
       @media (min-width: 600px) {

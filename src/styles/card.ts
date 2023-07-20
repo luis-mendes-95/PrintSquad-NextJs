@@ -265,7 +265,6 @@ export const DashServiceOrder = styled.div`
   box-shadow: inset 0 0 20px rgba(0, 0, 0, 1);
   background-color: white;
   min-width: 45%;
-  height: 400px;
   display: flex;
   flex-direction: column;
   justify-content: space-around;
@@ -365,7 +364,7 @@ export const DashServiceOrder = styled.div`
     width: 100%;
     margin-top: 10px;
     padding: 15px 10px;
-    height: 300px;
+    max-height: 500px;
     border: none;
     border-radius: 8px;
     box-shadow: 1pt 1pt 5pt black;
@@ -420,6 +419,10 @@ export const DashServiceOrderFiles = styled.div`
   align-items: center;
   text-align: center;
 
+      h2{
+      font-size: 30pt;
+    }
+
   @media (min-width: 768px) {
     min-width: 25%;
     padding: 5px 10px;
@@ -439,6 +442,7 @@ export const DashServiceOrderFiles = styled.div`
     text-shadow: 1pt 1pt 1pt black;
     box-shadow: 1pt 1pt 3pt black;
     height: 50px;
+    font-size: 20pt;
   }
 
   .noImage {
@@ -463,6 +467,7 @@ export const DashServiceOrderFiles = styled.div`
     @media (min-width: 768px) {
       height: 50px;
     }
+
 
     h3 {
       color: black;
@@ -507,17 +512,17 @@ export const DashServiceOrderFiles = styled.div`
 
   .divServiceOrderInstructions {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     gap: 15px;
     width: 100%;
-
     max-height: 250px;
     padding: 15px 10px;
+    flex-wrap: wrap;
     border: none;
     border-radius: 8px;
     box-shadow: 1pt 1pt 5pt black;
-    justify-content: flex-start;
-    align-items: space-around;
+    justify-content: space-around;
+    align-items: space-between;
     overflow-y: scroll;
 
     p {

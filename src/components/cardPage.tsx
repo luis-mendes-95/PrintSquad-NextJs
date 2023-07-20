@@ -45,20 +45,20 @@ const CardPage = ({ serviceOrder }: iCardServiceOrderProps) => {
         
       </div>
 
-      <div className="divMockup">
-        <h3>VER MOCKUP:</h3>
-          <button className="ButtonSeeMockup" onClick={SetShowMockupImgModal}>ABRIR</button>
-          
+      <div className="divMockup" >
+        <h3 >VER MOCKUP:</h3>
+          <button className="ButtonSeeMockup" onClick={SetShowMockupImgModal} style={{fontSize:"25pt"}}>ABRIR</button>
+  
       </div>
 
       <div className="divProductTitle">
         <h3>PRODUTO:</h3>
-        <p>{serviceOrder.product}</p>
+        <p style={{fontSize:"25pt"}}>{serviceOrder.product}</p>
       </div>
 
       <div className="divPrintType">
         <h3>TIPO:</h3>
-        <p>{serviceOrder.printType}</p>
+        <p >{serviceOrder.printType}</p>
       </div>
       
     </CardBasePage>

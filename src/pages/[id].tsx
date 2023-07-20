@@ -87,7 +87,7 @@ const ServiceOrder: NextPage<ServiceOrderProps> = ({
           <li
             key={`dashboard-${serviceOrder.id}`}
             className="liDashServiceOrder"
-            style={{ maxWidth: "93%", minWidth: "42%" }}
+            style={{ width: "95%"}}
           >
             <ServiceOrderDashboard serviceOrder={serviceOrder} />
           </li>
@@ -95,7 +95,7 @@ const ServiceOrder: NextPage<ServiceOrderProps> = ({
           <li
             key={`files-${serviceOrder.id}`}
             className="liDashServiceOrderFiles"
-            style={{ maxWidth: "100%", minWidth: "30%" }}
+            style={{ width: "95%"}}
           >
             <ServiceOrderDashFiles serviceOrder={serviceOrder} />
           </li>
@@ -104,6 +104,7 @@ const ServiceOrder: NextPage<ServiceOrderProps> = ({
             <button
               className="ButtonSendUpdateMockup"
               onClick={SetShowMockupModal}
+              style={{fontSize:"15pt"}}
             >
               ENVIAR / SUBSTITUIR MOCKUP
             </button>
@@ -113,7 +114,8 @@ const ServiceOrder: NextPage<ServiceOrderProps> = ({
             <button
               className="ButtonAuthorize"
               onClick={handleSentToPrinting}
-              style={{ backgroundColor: "brown" }}
+              style={{ backgroundColor: "brown", fontSize:"15pt", height: "50px"}}
+              
             >
               ENVIADOS PARA IMPRESSÃO
             </button>
@@ -123,6 +125,7 @@ const ServiceOrder: NextPage<ServiceOrderProps> = ({
             <button
               className="ButtonAuthorize"
               onClick={handleAuthorizePrinting}
+              style={{fontSize:"25pt"}}
             >
               AUTORIZAR IMPRESSÃO
             </button>
@@ -132,7 +135,7 @@ const ServiceOrder: NextPage<ServiceOrderProps> = ({
             <button
               className="ButtonAuthorize"
               onClick={handleSentToPrinting}
-              style={{ backgroundColor: "brown" }}
+              style={{ backgroundColor: "brown", height: "75px" }}
             >
               ENVIADOS PARA IMPRESSÃO
             </button>
@@ -142,7 +145,7 @@ const ServiceOrder: NextPage<ServiceOrderProps> = ({
             <button
               className="ButtonAuthorize"
               onClick={handleFinnish}
-              style={{ backgroundColor: "green" }}
+              style={{ backgroundColor: "green", height: "75px", fontSize:"20pt" }}
             >
               CONCLUIR PRODUÇÃO
             </button>
@@ -187,10 +190,9 @@ const ServiceOrder: NextPage<ServiceOrderProps> = ({
           </div>
           <img
             src={serviceOrder.mockupImg}
-            style={{
-              width: "100%",
-              transform: "scale(1.3)",
-              margin: "30px 0 0 0",
+            style={{width: "100%",
+              margin: "30px 0px 0px",
+              maxHeight: "70%",
             }}
           />
         </Modal>
