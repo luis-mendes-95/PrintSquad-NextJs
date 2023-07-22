@@ -153,6 +153,7 @@ const ServiceOrderForm = () => {
           <option value="WINDBANNER 1,5M">WINDBANNER 1,5M</option>
           <option value="WINDBANNER 2,5M">WINDBANNER 2,5M</option>
           <option value="WINDBANNER 3,2M">WINDBANNER 3,2M</option>
+          <option value="OUTRO">OUTRO</option>
         </select>
 
         <label style={{ fontSize: "25pt" }}>Tipo de Arte:</label>
