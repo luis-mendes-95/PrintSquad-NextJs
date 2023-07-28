@@ -16,6 +16,9 @@ interface ServiceOrderProviderData {
   SetServiceOrders: (data:any) => any;
   getAllServiceOrders: () => any;
 
+  //FINANCIAL CONTROLS
+  designerPayables: number;
+
   //INDIVIDUAL SERVICE ORDER
   selectedOrderId: string;
   setSelectedOrderId: Dispatch<SetStateAction<string>>;
@@ -54,6 +57,9 @@ interface ServiceOrderProviderData {
 
   //ARCHIVE
   sentToArchive: (    id: string,    client: string,    description: string  ) => Promise<void>;
+
+  showFinancesButton: boolean;
+  setShowFinances: () => void;
 }
 
 const ServiceOrderContext = createContext<ServiceOrderProviderData>(
@@ -61,14 +67,24 @@ const ServiceOrderContext = createContext<ServiceOrderProviderData>(
 );
 
 const ServiceOrderProvider = ({ children }: Props) => {
+
   const [selectedOrderId, setSelectedOrderId] = useState<string>("");
-  const [showAddInstrunctionModal, setShowInstructionModal] =
-    useState<boolean>(false);
+  const [showAddInstrunctionModal, setShowInstructionModal] = useState<boolean>(false);
   const [showAddFileModal, setShowFileModal] = useState<boolean>(false);
   const [showAddMockupModal, setShowMockupModal] = useState<boolean>(false);
   const [showMockupImgModal, setShowMockupImgModal] = useState<boolean>(false);
 
-  const [serviceOrders, setServiceOrders] = useState([])
+  const [serviceOrders, setServiceOrders] = useState([]);
+
+  const [designerPayables, setDesignerPayables] = useState(0);
+
+  const [showFinancesButton, setShowFinancesButton] = useState(false);
+
+  const setShowFinances = () => {
+    setShowFinancesButton((prevState) => !prevState);
+  };
+
+
 
   const SetServiceOrders = (data: any) => {
     setServiceOrders(data)
@@ -78,6 +94,24 @@ const ServiceOrderProvider = ({ children }: Props) => {
   useEffect(() => {
     getAllServiceOrders()
   }, [])
+
+  const SetDesignerPayables = (serviceOrders: any) => {
+    
+    let orders = serviceOrders
+
+    let total = 0
+
+    console.log(serviceOrders)
+
+    for (const order of orders) {
+      console.log("eae")
+      console.log(parseInt(order.cost));
+      total += parseInt(order.cost)
+    }
+
+    setDesignerPayables(total)
+
+  }
   
 
   const [showCards, setShowCards] = useState<string>("AGUARDANDO ARTE");
@@ -388,7 +422,10 @@ const ServiceOrderProvider = ({ children }: Props) => {
         sentToArchive,
         serviceOrders,
         SetServiceOrders,
-        getAllServiceOrders
+        getAllServiceOrders,
+        designerPayables,
+        setShowFinances,
+        showFinancesButton
       }}
     >
       {children}

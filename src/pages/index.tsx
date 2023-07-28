@@ -11,6 +11,7 @@ import { useEffect } from "react";
 import { parseCookies } from "nookies";
 import { useServiceOrder } from "@/contexts/serviceOrderContext";
 import FilterModal from "@/components/filterModal";
+import FinancesModal from "@/components/financesModal";
 
 interface HomeProps {
   serviceOrders: serviceOrderData[];
@@ -21,7 +22,7 @@ const Home: NextPage<HomeProps> = ({ serviceOrders }) => {
   const router = useRouter();
 
   const { user, checkLoggedIn } = useAuth();
-  const { showCards, showFilterModal } = useServiceOrder()
+  const { showCards, showFilterModal, showFinancesButton } = useServiceOrder()
 
   useEffect(() => {
 
@@ -62,6 +63,7 @@ const Home: NextPage<HomeProps> = ({ serviceOrders }) => {
       </main>
       <Footer />
       {showFilterModal && <FilterModal/>}
+      {showFinancesButton&& <FinancesModal serviceOrders={serviceOrders}/>}
     </DivHomeBase>
   );
 };
