@@ -41,7 +41,24 @@ const ServiceOrderForm = () => {
 
     formData.date = date;
     formData.status = "AGUARDANDO ARTE";
-    formData.cost = "R$ 0,00";
+
+    if (formData.printType === "RETRABALHO") {
+      formData.cost = "0";
+    }
+
+    if (formData.printType === "TERCEIRIZADO") {
+      formData.cost = "0";
+    }
+
+    if (formData.printType === "ARTE NOVA") {
+      formData.cost = "40";
+    }
+
+    if (formData.printType === "REIMPRESSÃO") {
+      formData.cost = "20";
+    }
+
+
     formData.price = "R$ 0,00";
     formData.margin = "R$ 0,00";
     formData.files = null;
@@ -161,6 +178,8 @@ const ServiceOrderForm = () => {
           <option value="">Selecione o tipo de arte</option>
           <option value="ARTE NOVA">ARTE NOVA</option>
           <option value="REIMPRESSÃO">REIMPRESSÃO</option>
+          <option value="RETRABALHO">RETRABALHO</option>
+          <option value="TERCEIRIZADO">TERCEIRIZADO</option>
         </select>
 
         <label style={{ fontSize: "25pt" }}>Instrução:</label>
