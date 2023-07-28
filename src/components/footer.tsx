@@ -4,10 +4,10 @@ import { FooterBase } from "@/styles/footer";
 import { GoogleFonts } from "next-google-fonts";
 import { useRouter } from "next/router";
 
-const Footer= () => {
-  
+const Footer = () => {
+
   const { showLogoutButton, logout, user } = useAuth();
-  const { SetShowFilterModal } = useServiceOrder()
+  const { SetShowFilterModal, showFinancesButton, setShowFinances } = useServiceOrder()
   const router = useRouter();
 
   return (
@@ -16,9 +16,9 @@ const Footer= () => {
       <FooterBase>
         {user && (
           <>
-            <button className="ButtonFilter" onClick={()=>{router.push("/")}} style={{fontSize:"25pt", width:"60px", height:"60px"}}>🏠</button>
+            <button className="ButtonFilter" onClick={() => { router.push("/") }} style={{ fontSize: "25pt", width: "60px", height: "60px" }}>🏠</button>
             <button
-            style={{fontSize:"25pt", width:"60px", height:"60px"}}
+              style={{ fontSize: "25pt", width: "60px", height: "60px" }}
               className="ButtonAddOrder"
               onClick={() => {
                 router.push("/addServiceOrderPage");
@@ -26,15 +26,22 @@ const Footer= () => {
             >
               +
             </button>
-            <button className="ButtonFilter" onClick={SetShowFilterModal} style={{fontSize:"25pt", width:"60px", height:"60px"}}>🔍</button>
+            <button className="ButtonFilter" onClick={SetShowFilterModal} style={{ fontSize: "25pt", width: "60px", height: "60px" }}>🔍</button>
           </>
         )}
 
-        {showLogoutButton && (
+        {/* {showLogoutButton && (
           <button className="ButtonLogout" onClick={logout}>
             LogOut
           </button>
-        )}
+        )} */}
+        {
+          showLogoutButton && (
+            <button className="ButtonFinances" onClick={setShowFinances} style={{ backgroundColor: "green", color: "white", padding:"5px" }}>
+              Finanças
+            </button>
+          )
+        }
       </FooterBase>
     </>
   );

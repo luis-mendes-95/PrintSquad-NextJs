@@ -16,6 +16,7 @@ import AddOrChangeMockupFormModal from "@/components/AddOrChangeMockupFormModal"
 import Modal from "@/components/modal";
 import FilterModal from "@/components/filterModal";
 import { useEffect } from "react";
+import FinancesModal from "@/components/financesModal";
 
 interface ServiceOrderProps {
   serviceOrder: serviceOrderData;
@@ -25,6 +26,7 @@ const ServiceOrder: NextPage<ServiceOrderProps> = ({
   serviceOrder,
 }: ServiceOrderProps) => {
   const router = useRouter();
+  const { showFinancesButton} = useServiceOrder()
 
   const {
     SetShowInstructionModal,
@@ -88,7 +90,6 @@ const ServiceOrder: NextPage<ServiceOrderProps> = ({
           <li
             key={`dashboard-${serviceOrder.id}`}
             className="liDashServiceOrder"
-            style={{ width: "95%"}}
           >
             <ServiceOrderDashboard serviceOrder={serviceOrder} />
           </li>
@@ -96,7 +97,6 @@ const ServiceOrder: NextPage<ServiceOrderProps> = ({
           <li
             key={`files-${serviceOrder.id}`}
             className="liDashServiceOrderFiles"
-            style={{ width: "95%"}}
           >
             <ServiceOrderDashFiles serviceOrder={serviceOrder} />
           </li>
@@ -199,6 +199,7 @@ const ServiceOrder: NextPage<ServiceOrderProps> = ({
         </Modal>
       )}
       {showFilterModal && <FilterModal />}
+      {showFinancesButton && <FinancesModal serviceOrders={serviceOrders}/>}
     </ServiceOrderPageBase>
   );
 };
