@@ -11,6 +11,7 @@ import {
 } from "react";
 import { toast } from "react-toastify";
 
+
 interface Props {
   children: ReactNode;
 }
@@ -31,8 +32,14 @@ export const AuthProvider = ({ children }: Props) => {
   const [user, setUser] = useState<LoggedInUser | null>(null);
   const [showLogoutButton, setShowLogoutButton] = useState(false);
 
+  const cookies = parseCookies();
+  const userEmail = cookies['printsquad.email'];
+
   const setShowLogout = () => {
-    setShowLogoutButton((prevState) => !prevState);
+    if (userEmail !== "hudson@printsquad.com") {
+      setShowLogoutButton((prevState) => !prevState);
+    }
+
   };
 
   const checkLoggedIn = async () => {
