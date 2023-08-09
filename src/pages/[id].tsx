@@ -17,15 +17,16 @@ import Modal from "@/components/modal";
 import FilterModal from "@/components/filterModal";
 import { useEffect } from "react";
 import FinancesModal from "@/components/financesModal";
+import { parseCookies } from 'nookies';
 
 interface ServiceOrderProps {
   serviceOrder: serviceOrderData;
 }
 
-const ServiceOrder: NextPage<ServiceOrderProps> = ({
-  serviceOrder,
-}: ServiceOrderProps) => {
+const ServiceOrder: NextPage<ServiceOrderProps> = ({  serviceOrder,}: ServiceOrderProps) => {
+
   const router = useRouter();
+
   const { showFinancesButton} = useServiceOrder()
 
   const {
@@ -78,11 +79,18 @@ const ServiceOrder: NextPage<ServiceOrderProps> = ({
     );
   };
 
+  const cookies = parseCookies();
+  const userEmail = cookies['printsquad.email'];
+
+  console.log(userEmail)
+
   return (
     <ServiceOrderPageBase>
       <Header />
       <main>
+
         <ul className="serviceOrderCards">
+
           <li key={`card-${serviceOrder.id}`} className="liCardServiceOrder">
             <CardPage serviceOrder={serviceOrder} />
           </li>
@@ -101,7 +109,7 @@ const ServiceOrder: NextPage<ServiceOrderProps> = ({
             <ServiceOrderDashFiles serviceOrder={serviceOrder} />
           </li>
 
-          {serviceOrder.status === "AGUARDANDO ARTE" && (
+          {serviceOrder.status === "AGUARDANDO ARTE" && userEmail === "oceano@oceano.com" ? null : (
             <button
               className="ButtonSendUpdateMockup"
               onClick={SetShowMockupModal}
@@ -111,16 +119,16 @@ const ServiceOrder: NextPage<ServiceOrderProps> = ({
             </button>
           )}
 
-          {serviceOrder.status === "AGUARDANDO ARTE" && (
+          {serviceOrder.status === "AGUARDANDO ARTE" && userEmail !== "hudson@printsquad.com" && userEmail !== "oceano@oceano.com" ? (
             <button
               className="ButtonAuthorize"
               onClick={handleSentToPrinting}
-              style={{ backgroundColor: "brown", fontSize:"15pt", height: "50px"}}
-              
+              style={{ backgroundColor: "brown", fontSize: "15pt", height: "50px" }}
             >
               ENVIADOS PARA IMPRESSÃO
             </button>
-          )}
+          ) : null}
+
 
           {serviceOrder.status === "AGUARDANDO CLIENTE" && (
             <button
