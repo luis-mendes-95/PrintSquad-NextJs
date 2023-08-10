@@ -109,15 +109,19 @@ const ServiceOrder: NextPage<ServiceOrderProps> = ({  serviceOrder,}: ServiceOrd
             <ServiceOrderDashFiles serviceOrder={serviceOrder} />
           </li>
 
-          {serviceOrder.status === "AGUARDANDO ARTE" && userEmail === "oceano@oceano.com" ? null : (
-            <button
-              className="ButtonSendUpdateMockup"
-              onClick={SetShowMockupModal}
-              style={{fontSize:"15pt"}}
-            >
-              ENVIAR / SUBSTITUIR MOCKUP
-            </button>
-          )}
+          {serviceOrder.status === "AGUARDANDO ARTE" && userEmail === "oceano@oceano.com" && null}
+
+          {serviceOrder.status === "AGUARDANDO ARTE" && userEmail !== "oceano@oceano.com" ? (
+             (
+              <button
+                className="ButtonSendUpdateMockup"
+                onClick={SetShowMockupModal}
+                style={{fontSize:"15pt"}}
+              >
+                ENVIAR / SUBSTITUIR MOCKUP
+              </button>
+            ) 
+          ) : null}
 
           {serviceOrder.status === "AGUARDANDO ARTE" && userEmail !== "hudson@printsquad.com" && userEmail !== "oceano@oceano.com" ? (
             <button
@@ -130,7 +134,7 @@ const ServiceOrder: NextPage<ServiceOrderProps> = ({  serviceOrder,}: ServiceOrd
           ) : null}
 
 
-          {serviceOrder.status === "AGUARDANDO CLIENTE" && (
+          {serviceOrder.status === "AGUARDANDO CLIENTE" && userEmail !== "hudson@printsquad.com" && userEmail === "oceano@oceano.com" ? (
             <button
               className="ButtonAuthorize"
               onClick={handleAuthorizePrinting}
@@ -138,9 +142,9 @@ const ServiceOrder: NextPage<ServiceOrderProps> = ({  serviceOrder,}: ServiceOrd
             >
               AUTORIZAR IMPRESSÃO
             </button>
-          )}
+          ) : null}
 
-          {serviceOrder.status === "APROVADA" && (
+          {serviceOrder.status === "APROVADA" && userEmail !== "oceano@oceano.com" && userEmail !== "hudson@printsquad.com" && (
             <button
               className="ButtonAuthorize"
               onClick={handleSentToPrinting}
@@ -160,7 +164,7 @@ const ServiceOrder: NextPage<ServiceOrderProps> = ({  serviceOrder,}: ServiceOrd
             </button>
           )}
 
-          {serviceOrder.status === "CONCLUÍDA" && (
+          {serviceOrder.status === "CONCLUÍDA" && userEmail !== "oceano@oceano.com" && (
             <button
               className="ButtonAuthorize"
               onClick={handleArchive}
