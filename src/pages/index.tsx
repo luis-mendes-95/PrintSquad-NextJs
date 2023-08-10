@@ -29,38 +29,55 @@ const Home: NextPage<HomeProps> = ({ serviceOrders }) => {
     checkLoggedIn()
 
   }, [])
+
+  const cookies = parseCookies();
+  const userEmail = cookies['printsquad.email'];
   
 
   return (
     <DivHomeBase>
       <Header />
       <main>
-        {user ? (
-          <ul className="serviceOrderCards" style={{minHeight:"100%"}}>
-            {serviceOrders.length === 0 && (
-              <div className="divNoOrders">Você não possui nenhuma ordem de serviço</div>
-            )}
-            {serviceOrders.map((individualServiceOrder) => {
-              if (showCards === "TODOS" && individualServiceOrder.status !== "ARQUIVADA" && individualServiceOrder.status !== "CONCLUÍDA"){
-                return (
-                  <li key={individualServiceOrder.id}>
-                    <CardServiceOrder serviceOrder={individualServiceOrder} />
-                  </li>
-                );
-              } else if (individualServiceOrder.status === showCards) {
-                return (
-                  <li key={individualServiceOrder.id}>
-                    <CardServiceOrder serviceOrder={individualServiceOrder} />
-                  </li>
-                );
-              }
+  {user ? (
+    <ul className="serviceOrderCards" style={{ minHeight: "100%" }}>
+      {serviceOrders.length === 0 && (
+        <div className="divNoOrders">Você não possui nenhuma ordem de serviço</div>
+      )}
+      {serviceOrders.map((individualServiceOrder) => {
+        const isHudson = userEmail === "hudson@printsquad.com";
 
-            })}
-          </ul>
-        ) : (
-          <section className="sectionHomePageVisitor" style={{backgroundColor:"black", height:"100vh"}}>sectionHomePageVisitor</section>
-        )}
-      </main>
+        if (
+          (isHudson &&
+            individualServiceOrder.status === "AGUARDANDO ARTE" &&
+            individualServiceOrder.printType === "ARTE NOVA") ||
+          (!isHudson &&
+            ((showCards === "TODOS" &&
+              individualServiceOrder.status !== "ARQUIVADA" &&
+              individualServiceOrder.status !== "CONCLUÍDA") ||
+              individualServiceOrder.status === showCards))
+        ) {
+          return (
+            <li key={individualServiceOrder.id}>
+              <CardServiceOrder serviceOrder={individualServiceOrder} />
+            </li>
+          );
+        }
+        return null;
+      })}
+    </ul>
+  ) : (
+    <section
+      className="sectionHomePageVisitor"
+      style={{ backgroundColor: "black", height: "100vh" }}
+    >
+      sectionHomePageVisitor
+    </section>
+  )}
+</main>;
+
+
+
+
       <Footer />
       {showFilterModal && <FilterModal/>}
       {showFinancesButton&& <FinancesModal serviceOrders={serviceOrders}/>}
