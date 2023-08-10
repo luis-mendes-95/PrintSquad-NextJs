@@ -44,14 +44,17 @@ const Home: NextPage<HomeProps> = ({ serviceOrders }) => {
         <div className="divNoOrders">Você não possui nenhuma ordem de serviço</div>
       )}
       {serviceOrders.map((individualServiceOrder) => {
+        const isHudson = userEmail === "hudson@printsquad.com";
+
         if (
-          (showCards === "TODOS" &&
-            individualServiceOrder.status !== "ARQUIVADA" &&
-            individualServiceOrder.status !== "CONCLUÍDA") ||
-          (userEmail === "hudson@printsquad.com" &&
-            individualServiceOrder.printType === "ARTE NOVA" &&
-            individualServiceOrder.status === showCards) ||
-          userEmail !== "hudson@printsquad.com"
+          (isHudson &&
+            individualServiceOrder.status === "AGUARDANDO ARTE" &&
+            individualServiceOrder.printType === "ARTE NOVA") ||
+          (!isHudson &&
+            ((showCards === "TODOS" &&
+              individualServiceOrder.status !== "ARQUIVADA" &&
+              individualServiceOrder.status !== "CONCLUÍDA") ||
+              individualServiceOrder.status === showCards))
         ) {
           return (
             <li key={individualServiceOrder.id}>
@@ -71,6 +74,9 @@ const Home: NextPage<HomeProps> = ({ serviceOrders }) => {
     </section>
   )}
 </main>;
+
+
+
 
       <Footer />
       {showFilterModal && <FilterModal/>}

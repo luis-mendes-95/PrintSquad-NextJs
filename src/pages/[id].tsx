@@ -134,7 +134,7 @@ const ServiceOrder: NextPage<ServiceOrderProps> = ({  serviceOrder,}: ServiceOrd
           ) : null}
 
 
-          {serviceOrder.status === "AGUARDANDO CLIENTE" && userEmail !== "hudson@printsquad.com" && userEmail === "oceano@oceano.com" ? (
+          {serviceOrder.status === "AGUARDANDO CLIENTE" && userEmail !== "hudson@printsquad.com" ? (
             <button
               className="ButtonAuthorize"
               onClick={handleAuthorizePrinting}
